@@ -190,10 +190,10 @@ var Util = {
 };
 
 var host = 'http://russianbrides.com.au', // russianbrides.com.au bridescontacts.net
-	cgiURL = host + '/cgi/authn.pl';
-
+	cgiURL = host + '/cgi/authn.pl',
+	urlParams = Util.getUrlParams();
 var User = {
-	urlParams: Util.getUrlParams(),
+	urlParams: urlParams,
 	cmdSave: Util.getNode('cmdSave'),
 	aLoader: Util.createNode('img', {insertBefore: true, src: 'css/img/ajax-loader.gif', className: 'aLoader collapse'}, document.body),
 	getFormData: function(formNode) {
