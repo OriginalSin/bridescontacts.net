@@ -191,11 +191,13 @@ var Util = {
 
 var host = 'http://russianbrides.com.au', // russianbrides.com.au bridescontacts.net
 	cgiURL = host + '/cgi/authn.pl',
-	urlParams = Util.getUrlParams();
+	urlParams = Util.getUrlParams(),
+	pref = urlParams.dir !== '/' && urlParams.dir !== 'bridescontacts.net'? '..' : '.';
+
 var User = {
 	urlParams: urlParams,
 	cmdSave: Util.getNode('cmdSave'),
-	aLoader: Util.createNode('img', {insertBefore: true, src: 'css/img/ajax-loader.gif', className: 'aLoader collapse'}, document.body),
+	aLoader: Util.createNode('img', {insertBefore: true, src: pref + '/css/img/ajax-loader.gif', className: 'aLoader collapse'}, document.body),
 	getFormData: function(formNode) {
 		var formData = new FormData();
 		for (var i = 0, len = formNode.length; i < len; i++) {
