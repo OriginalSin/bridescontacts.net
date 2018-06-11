@@ -1381,11 +1381,12 @@ var Galer = {
 				dataKey = img.getAttribute('dataKey') || '';
 
 			img = images[0];
-			body.innerHTML = '<img class="rb-view-image" src="'+ host + '/' + img.src +'" dataKey="'+ dataKey +'" />';
-			dialogNode.classList.toggle('collapse');
-			User._setTransform(Util.getNode('rb-view-image', body), img.rotate);
-			// Util.getNode('rb-view-image', body).style.transform = 'rotate(' + pt.rotate + 'deg)';}
-			
+			if (img) {
+				body.innerHTML = '<img class="rb-view-image" src="'+ host + '/' + img.src +'" dataKey="'+ dataKey +'" />';
+				dialogNode.classList.toggle('collapse');
+				User._setTransform(Util.getNode('rb-view-image', body), img.rotate);
+				// Util.getNode('rb-view-image', body).style.transform = 'rotate(' + pt.rotate + 'deg)';}
+			}
 		}
 	}
 };
