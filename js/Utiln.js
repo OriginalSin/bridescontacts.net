@@ -189,7 +189,7 @@ var Util = {
 	}
 };
 
-var host = '//russianbrides.com.au', // russianbrides.com.au bridescontacts.net
+var host = 'http://russianbrides.com.au', // russianbrides.com.au bridescontacts.net
 	cgiURL = host + '/cgi/authn.pl';
 
 var User = {
