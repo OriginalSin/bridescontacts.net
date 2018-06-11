@@ -195,7 +195,7 @@ var host = '//russianbrides.com.au', // russianbrides.com.au bridescontacts.net
 var User = {
 	urlParams: Util.getUrlParams(),
 	cmdSave: Util.getNode('cmdSave'),
-	aLoader: Util.createNode('img', {insertBefore: true, src: '/css/img/ajax-loader.gif', className: 'aLoader collapse'}, document.body),
+	aLoader: Util.createNode('img', {insertBefore: true, src: 'css/img/ajax-loader.gif', className: 'aLoader collapse'}, document.body),
 	getFormData: function(formNode) {
 		var formData = new FormData();
 		for (var i = 0, len = formNode.length; i < len; i++) {
@@ -921,7 +921,7 @@ var Menu = {
 		var cgi = '/cgi/';
 		// var pref = host;
 		// var pref = './brides';
-		var pref = User.urlParams.dir !== '/' ? '..' : '.';
+		var pref = User.urlParams.dir !== '/' && User.urlParams.dir !== 'bridescontacts.net'? '..' : '.';
 
 		var data = {
 			'home': {'url': pref + '/index.html', 'txt': 'Home' }
