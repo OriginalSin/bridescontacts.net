@@ -192,7 +192,7 @@ var Util = {
 var host = 'http://russianbrides.com.au', // russianbrides.com.au bridescontacts.net
 	cgiURL = host + '/cgi/authn.pl',
 	urlParams = Util.getUrlParams(),
-	pref = urlParams.dir !== '/' && urlParams.dir !== 'bridescontacts.net'? '..' : '.';
+	pref = urlParams.dir !== '/' || urlParams.dir !== 'bridescontacts.net'? '..' : '.';
 
 var User = {
 	urlParams: urlParams,
