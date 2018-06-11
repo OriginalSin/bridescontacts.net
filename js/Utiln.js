@@ -1271,8 +1271,12 @@ var Galer = {
 		if (st.match('/0/')) {
 			st = st.replace('/0/', '/1/');
 		} else if (st.match('/1/')) {
-			st = User.pref + '/jpeg/blank' + (st.match('/m/') ? 'm' : 'w') + '.jpg';
-			node.onerror = null;
+			if (!st.match('/russianbrides\.com\.au/')) {
+				st = host + (new URL(st)).pathname.replace('/1/', '/0/');
+			} else {
+				node.onerror = null;
+				st = User.pref + '/jpeg/blank' + (st.match('/m/') ? 'm' : 'w') + '.jpg';
+			}
 		}
 		node.src = st;
 	},
@@ -1299,7 +1303,7 @@ var Galer = {
 				}
 			}
 			res += '<td><a href="javascript:" onclick="' + ev + '">' +
-				'<img src="' + host + '/' + _jpg1 + '"' + rotate + ' />' +
+				'<img src="' + User.pref + '/' + _jpg1 + '"' + rotate + ' />' +
 				'<div class="rb-imagesCount" title="Photos">' + imagesCount + '</div>' +
 				'<br><span>id: ' + it.onum + '</span>' +
 				'<br><span>' + Util.getPname(it) + '</span>' +

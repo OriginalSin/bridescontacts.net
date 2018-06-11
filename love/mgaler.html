@@ -105,7 +105,8 @@
 	</div>
 
 		<div class="leftside">
-			<img id="jpg2a" class="rb-src-jpg2" width=280 height=420 vspace=0 hspace=0 border=0 align=absmiddle>
+			<img id="jpg2a" class="rb-src-jpg2 pointer" dataCmd="openImageDialog" width=280 height=420>
+			<div class="click image" dataCmd="openImageDialog">Click on image for view all photos</div>
 			<br>
 			<div class="dashLine"></div>
 			<br>
@@ -119,9 +120,6 @@
 				<table class="leftBorder">
 					<tr valign="top">
 						<td style="padding-left: 16px;">
-							<img id="jpg1a" class="rb-src-jpg1" width=100 height=150 vspace=0 hspace=0 border=0 align=absmiddle>
-							<img id="jpg3a" class="rb-src-jpg3" width=100 height=150 vspace=0 hspace=0 border=0 align=absmiddle>
-							<br>
 		<span class=anc>Age:</span> <span id="Age" class="rb-item-age"></span><br><br>
 		<span class=anc>Eye Colour:</span> <span id="EyeColor" class="rb-item-EyeColor"></span><br>
 		<span class=anc>Hair Colour:</span> <span id="HairColor" class="rb-item-HairColor"></span><br>
@@ -168,6 +166,8 @@
 	</td>
   </tr>
 </table>
+<div class="dialog-pictures collapse"></div>
+
 <!-- Yandex.Metrika informer -->
 <a href="https://metrika.yandex.ru/stat/?id=9359518&amp;from=informer"
 target="_blank" rel="nofollow"><img src="https://informer.yandex.ru/informer/9359518/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
