@@ -903,7 +903,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			if (json.res.meetme) {
 				Galer.meetme(json.res.meetme);
 			}
-		});
+		}).catch(console.error);
 	},
 	logout: function() {
 		location.href = './register_id.html?logout=1'
