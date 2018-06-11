@@ -192,9 +192,10 @@ var Util = {
 var host = 'http://russianbrides.com.au', // russianbrides.com.au bridescontacts.net
 	cgiURL = host + '/cgi/authn.pl',
 	urlParams = Util.getUrlParams(),
-	pref = urlParams.dir !== '/' || urlParams.dir !== 'bridescontacts.net'? '..' : '.';
+	pref = urlParams.dir === 'love' ? '..' : '.';
 
 var User = {
+	pref: pref,
 	urlParams: urlParams,
 	cmdSave: Util.getNode('cmdSave'),
 	aLoader: Util.createNode('img', {insertBefore: true, src: pref + '/css/img/ajax-loader.gif', className: 'aLoader collapse'}, document.body),
@@ -923,7 +924,7 @@ var Menu = {
 		var cgi = '/cgi/';
 		// var pref = host;
 		// var pref = './brides';
-		var pref = User.urlParams.dir !== '/' && User.urlParams.dir !== 'bridescontacts.net'? '..' : '.';
+		var pref = User.pref;
 
 		var data = {
 			'home': {'url': pref + '/index.html', 'txt': 'Home' }
@@ -1270,7 +1271,7 @@ var Galer = {
 		if (st.match('/0/')) {
 			st = st.replace('/0/', '/1/');
 		} else if (st.match('/1/')) {
-			st = '/jpeg/blank' + (st.match('/m/') ? 'm' : 'w') + '.jpg';
+			st = User.pref + '/jpeg/blank' + (st.match('/m/') ? 'm' : 'w') + '.jpg';
 			node.onerror = null;
 		}
 		node.src = st;
