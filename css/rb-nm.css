@@ -612,6 +612,9 @@ div#galArr {
 .rb-item-detail .inner .fright {
     float: right;
 }
+.cpointer {
+	cursor: pointer;
+}
 .mbody #galerItem .linkColor span {
 	cursor: pointer;
 }

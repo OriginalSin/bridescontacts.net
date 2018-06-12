@@ -253,7 +253,7 @@ var User = {
 			location.href = page;
 			return;
 		} else if (cmd === 'cmdGetAddress') {
-			location.href = './address.html';
+			location.href = './address.html?to=' + Galer._currentItem.onum;
 			return;
 		} else if (cmd === 'cmdLastlocation') {
 			location.href = '/maps/myLocation.html?ip=' + User.auth.ip;
@@ -862,6 +862,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			if (msg) {
 				opt.params.msg = msg;
 			}
+		} else if (User.urlParams.page === 'address') {
+			opt.params.charset = 'windows-1251';
+			opt.params.page = 'address';
 		} else if (User.urlParams.page === 'meetme' || User.urlParams.page === 'wmeetme') {
 			opt.params.meetme = User.urlParams.page;
 			opt.params.meetmeNums = Galer.meetmeNums;
@@ -1109,6 +1112,8 @@ var Galer = {
 			}
 		} else if (Galer.onlineCont) {
 			Galer.onlineCont.innerHTML = Galer.getGalerTable(User.galer, true);
+		} else if (to && User.urlParams.page === 'address') {
+			if (arr[0]) { Galer._putItem(arr[0]); }
 		}
 	},
 	_currentItem: null,
@@ -1298,7 +1303,7 @@ var Galer = {
 					var img = images[0],
 					_jpg1 = img.src;
 					if (img.rotate) {
-						rotate = ' onload="window.RB.Galer.itemRotate(this, ' + img.rotate + ')"';
+						rotate += ' onload="window.RB.Galer.itemRotate(this, ' + img.rotate + ')"';
 					}
 				}
 			}

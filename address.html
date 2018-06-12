@@ -12,8 +12,6 @@
 	<link href="css/rbn.css" rel="stylesheet">
 	<link href="css/rb-nm.css" rel="stylesheet">
 
-	<script src="js/sJsLib.js" charset="utf-8"></script>
-	<script src="js/mcheck.js"></script>
 </head>
 <body class="rb-mbody mbody mbodycss">
 <div class="rb-header center"><p>RUSSIAN BRIDES - Authorized Russian brides introduction agency in Melbourne, Australia. Date beautiful Russian brides interested in marriage or relationship with American, Australian and New Zealand men. Real, single Russian women at Russian Brides have all passed verification security checks.</p></div>
@@ -31,7 +29,7 @@
 		</div>
 	</div>
 
-	<div class="rb-inner">
+	<div class="rb-inner rb-item-detail">
 		<table>
 			<tr> 
 				<td>
@@ -43,12 +41,12 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr valign="top">
         <td align="center">
-            <img src="" width=100 height=152 border=0 vspace=2 id="jpg1a" onError="">
+            <img src="" class="rb-src-jpg1" width=100 height=152 border=0 vspace=2 id="jpg1a" onError="">
         </td>
         <td>&nbsp;&nbsp;&nbsp;</td>
         <td>
-            <span id="nameFull" class=title></span><br>
-            <span class=nomer>(profile #</span><span id="iOnum" class="nomer"></span><span class=nomer>)</span><br><br>
+            <span id="nameFull" class="title rb-item-pName"></span><br>
+            <span class=nomer>(profile #</span><span id="iOnum" class="nomer rb-item-onum"></span><span class=nomer>)</span><br><br>
             <span class=anc>Home address:-</span>
             <table width=90% border=0 cellspacing=0 cellpadding=0 bgcolor=white>
             <tr>
@@ -56,22 +54,22 @@
                 <table width=100% border=0 cellspacing=0 cellpadding=5 align=center>
                     <tr>
                         <td>
-                            <font id="address" color=#2F3D53></font>
+                            <font id="address" class="rb-item-addru" color=#2F3D53></font>
                         </td>
                     </tr>
                 </table>
             </td>
             <td align=right>
-                <img src="images/cut.gif" width=15 height=40 alt="Print and cut" border=0>
+                <img src="./img/cut.gif" width=15 height=40 alt="Print and cut" border=0>
             </td>
             </tr>
             </table>
 
             <br>
-            <span class=anc>Home Phone:</span> <span id="hphone"></span><br><br>
-            <span class=anc>E-mail:</span> <span id="emailLink"></span><br>
+            <span class=anc>Home Phone:</span> <span id="hphone" class="rb-item-hphone"></span><br><br>
+            <span class=anc>E-mail:</span> <span id="emailLink" class="rb-item-email">true</span><br>
             <span class=anc>Skype:</span> <span id="icq">None</span><br>
-            <span class=anc>Correct any address details in :</span> <a id="toTalk" href=""> Talk Room</a><br>
+            <span class=anc>Correct any address details in :</span> <a id="toTalk" class="cmdTalkRoom cpointer" dataCmd="cmdTalkRoom"> Talk Room</a><br>
         </td>
     </tr>
 </table>
@@ -128,8 +126,6 @@
 </div>
 	<script>
 		window.gender = 'm';
-        rbAPI.mcheck.init();
-
 	</script>
 
 <script language="JavaScript">
