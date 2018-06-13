@@ -169,7 +169,7 @@ var Util = {
 			<div tabindex="-1" class="ant-modal-wrap ant-modal-mask-hidden" role="dialog" aria-labelledby="rcDialogTitle2">\
 				<div role="document" class="ant-modal">\
 					<div class="ant-modal-content">\
-						<button aria-label="Close" class="ant-modal-close"><span class="ant-modal-close-x cmdClose"></span></button>\
+						<button aria-label="Close" class="ant-modal-close cmdClose"><span class="ant-modal-close-x cmdClose"></span></button>\
 						<div class="ant-modal-header">\
 							<div class="ant-modal-title" id="rcDialogTitle2"></div>\
 							{h_buttons}\
@@ -640,7 +640,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			var pt = pimages[nm];
 			img.src = host + '/' + pt.src;
 			// img.onload = window.RB.Galer.itemRotate(img, img.rotate, img.naturalWidth, img.naturalHeight);
-			img.style.transform = 'rotate(' + pt.rotate + 'deg)';
+			if (pt.rotate) { img.style.transform = 'rotate(' + pt.rotate + 'deg)'; }
 			if (footer) { footer.innerHTML = '<span class="round rb-absolute">' + (nm + 1) + '</span'; }
 		} else if (node.classList.contains('cmdDelete')) {
 			// if (dopFiles.dataKey) {
@@ -928,6 +928,7 @@ var Menu = {
 		// var pref = host;
 		// var pref = './brides';
 		var pref = User.pref;
+		if (User.urlParams.dir === 'services') { pref = '..'; }
 
 		var data = {
 			'home': {'url': pref + '/index.html', 'txt': 'Home' }
@@ -1081,7 +1082,7 @@ var Galer = {
 		}
 	},
 	getNav: function() {
-		var f = Number(User.galer.from);
+		var f = Number(User.galer.from),
 			count = Number(User.galer.count.cnt),
 			out = '';
 
@@ -1389,7 +1390,7 @@ var Galer = {
 			if (img) {
 				body.innerHTML = '<img class="rb-view-image" src="'+ host + '/' + img.src +'" dataKey="'+ dataKey +'" />';
 				dialogNode.classList.toggle('collapse');
-				User._setTransform(Util.getNode('rb-view-image', body), img.rotate);
+				if (img.rotate) { User._setTransform(Util.getNode('rb-view-image', body), img.rotate); }
 				// Util.getNode('rb-view-image', body).style.transform = 'rotate(' + pt.rotate + 'deg)';}
 			}
 		}
@@ -1464,7 +1465,7 @@ window.RB = {
 	Util: Util
 };
 
-User.getData(User.urlParams.par.p);
+User.getData(User.urlParams.par.p || 0);
 User.curYear = Util.getNode('curYear');
 if (User.curYear) {
 	User.curYear.innerHTML = '-' + (new Date()).getFullYear();
