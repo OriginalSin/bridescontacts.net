@@ -928,7 +928,10 @@ var Menu = {
 		// var pref = host;
 		// var pref = './brides';
 		var pref = User.pref;
-		if (User.urlParams.dir === 'services') { pref = '..'; }
+		if (User.urlParams.dir === 'services' ||
+			User.urlParams.dir === 'scammers' ||
+			User.urlParams.dir === 'flora'
+		) { pref = '..'; }
 
 		var data = {
 			'home': {'url': pref + '/index.html', 'txt': 'Home' }

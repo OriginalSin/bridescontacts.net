@@ -7,8 +7,6 @@
 
 	<link href="css/rbn.css" rel="stylesheet">
 	<link href="css/rb-nm.css" rel="stylesheet">
-	<script src="js/sJsLib.js" charset="utf-8"></script>
-	<script src="js/mvideo.js"></script>
 
 </head>
 <body class="rb-mbody mbodycss">
@@ -23,8 +21,7 @@
 			<span class="sr-only">Menu</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 		</button>
 
-		<div id="mainMenu" class="rb-menu-man-content">
-		</div>
+		<div id="mainMenu" class="rb-menu-man-content"></div>
 	</div>
 
 	<div class="rb-inner" style="margin-right: 304px;">
@@ -59,7 +56,48 @@
 	<script>
 		window.gender = 'm';
 
-        rbAPI.mvideo.init();
+		function putVideo() {
+			var shab = '';
+			var shab = '<table width="100%" border="0" cellspacing="0" cellpadding="0">\
+<tr><td width="100%">\
+<table width="100%" border="0" cellspacing="0" cellpadding="5">\
+<tr><td bgcolor="#FFFFFF"><span class="title"><img src="img/tick.gif" width="16" height="15" hspace="10">\
+<font color="#000033">_name_</font></span>\
+<font color="black"> (From: <font class="newsdate" color="#000033">_from_</font>)</font>\
+<br><p>\
+<iframe width="560" height="315" src="_link_" frameborder="0" allowfullscreen></iframe></p>\
+</p></td></tr></table></td></tr></table>\n<br><br>\n';
+			var arr = [
+				{
+					'name': 'Православные в Австралии'
+					,'from': 'Sergio'
+					,'link': 'http://www.youtube.com/embed/pAbmNJU1wCU?list=PL6824CD93B1B941DD'
+				}
+				,
+				{
+					'name': 'Rob Ridgeway Mobile Massage Therapy'
+					,'from': 'Rob'
+					,'link': 'http://www.youtube.com/embed/dAiPFFAZd4M'
+				}
+				,
+				{
+					'name': 'St.Kilda Beach, Australia'
+					,'from': 'Sergio'
+					,'link': 'http://www.youtube.com/embed/i6n0x_LUi-U'
+				}
+			];
+			var out = '';
+			for(var i=0, len=arr.length; i<len; i++) {
+				var it = arr[i];
+				var st = shab;
+				st = st.replace(/_name_/gm, it['name']);
+				st = st.replace(/_from_/gm, it['from']);
+				st = st.replace(/_link_/gm, it['link']);
+				out += st;
+			}
+			document.getElementById('videoCont').innerHTML = out;
+		}
+		putVideo();
 
 	</script>
 </body>
