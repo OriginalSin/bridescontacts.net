@@ -62,7 +62,8 @@ var Util = {
 		return new Promise(function(resolve, reject) {
 			var cParamName = 'cParamName' in options ? options.cParamName : 'callback',
 				urlParams = Util.extend({}, params, User.syncParams),
-				out = {options: options, params: params};
+				out = {options: options, params: params},
+				proxyFlag = (location.protocol === 'https:' && src.substr(0, 5) === 'http:');
 
 			urlParams[cParamName] = Util.uniqueGlobalName(function(obj) {
 				delete window[urlParams[cParamName]];
@@ -77,7 +78,8 @@ var Util = {
 				}
 			}
 			var script = document.createElement('script'),
-				src = url + (url.indexOf('?') === -1 ? '?' : '&') + pArr.join('&');
+				parStr = pArr.join('&'),
+				src = url + (url.indexOf('?') === -1 ? '?' : '&') + parStr;
 
  			script.setAttribute('charset', 'UTF-8');
 			script.onerror = function(e) {
@@ -89,8 +91,8 @@ var Util = {
 			script.onload = function() {
 				script.parentNode.removeChild(script);
 			};
-			if (location.protocol === 'https:' && src.substr(0, 5) === 'http:') {
-				src = proxyHTTPS + urlParams[cParamName] +'&get=' + src;
+			if (proxyFlag) {
+				src = proxyHTTPS + urlParams[cParamName] +'&get=' + url + '?params=' + encodeURIComponent(parStr);
 			}
 
 			script.setAttribute('src', src);
@@ -1023,7 +1025,7 @@ var Menu = {
 			if(prof.accOk) {
 				prof.accContainTitle = 'Premium Membership to date ' + prof.accContain;
 				st += '<span class="anc"><br><br>Premium Membership to<br>date ' + prof.accContain;
-				st += '<br>Profile Publish - <b>On</b> (<a href="http://russianbrides.com.au/love/mgaler.html?v=' + prof.onum + '" target="_blank">LoveAustraliaRU</a>)</span>';
+				st += '<br>Profile Publish - <b>On</b> (<a href="/love/mgaler.html?v=' + prof.onum + '" target="_blank">LoveAustraliaRU</a>)</span>';
 			} else {
 				st += '<span class="anc"><br><br>Your Membership is: <b style="color: red">Off</b>';
 				// if(onum) {
