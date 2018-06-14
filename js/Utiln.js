@@ -73,7 +73,7 @@ var Util = {
 			});
 			var pArr = [];
 			for (var p in urlParams) {
-				if (p) {
+				if (p && (!proxyFlag || p !== cParamName)) {
 					pArr.push(p + '=' + encodeURIComponent(urlParams[p]));
 				}
 			}
