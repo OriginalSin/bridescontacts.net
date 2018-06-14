@@ -92,7 +92,7 @@ var Util = {
 				script.parentNode.removeChild(script);
 			};
 			if (proxyFlag) {
-				src = proxyHTTPS + urlParams[cParamName] +'&get=' + url + '?params=' + encodeURIComponent(parStr);
+				src = proxyHTTPS + urlParams[cParamName] +'&get=' + url + '?' + encodeURIComponent(parStr);
 			}
 
 			script.setAttribute('src', src);
