@@ -854,6 +854,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					byAge: User.urlParams.par.byAge || 0
 				}
 			};
+		if (User.urlParams.par.tmpSess) {
+			opt.params.tmpSess = User.urlParams.par.tmpSess;
+		}
 		if (User.urlParams.par.onum) {
 			opt.params.onum = User.urlParams.par.onum;
 		}
