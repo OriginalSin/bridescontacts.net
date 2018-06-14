@@ -248,19 +248,20 @@ var User = {
 			Galer._viewImagesDialog(ev);
 			return;
 		} else if (cmd === 'cmdTalkRoom') {
-			var usr = User.par.usr || window.gender || User.myLocale.usr || 'w',
-			page = './anketa.html?usr=' + usr;
+			var usr = User.par.usr || window.gender || User.myLocale.usr || 'w';
+			
+			page = './anketa.html?usr=' + usr + '&tmpSess=' + User.auth.tmpSess;
 			if (User.profile) {
-				page = '/talk.html?usr=' + User.profile.usr + '&to=' + Galer._currentItem.onum;
+				page = '/talk.html?usr=' + User.profile.usr + '&to=' + Galer._currentItem.onum + '&tmpSess=' + User.auth.tmpSess;
 				if (User.profile.usr === 'w' && User.profile.pub != 1) {
 					alert('Вам необходимо дождаться верификации вашего аккаунта!');
-					page = 'verify.html?usr=' + User.profile.usr;
+					page = 'verify.html?usr=' + User.profile.usr + '&tmpSess=' + User.auth.tmpSess;
 				}
 			}
 			location.href = page;
 			return;
 		} else if (cmd === 'cmdGetAddress') {
-			location.href = './address.html?to=' + Galer._currentItem.onum;
+			location.href = './address.html?to=' + Galer._currentItem.onum + '&tmpSess=' + User.auth.tmpSess;
 			return;
 		} else if (cmd === 'cmdLastlocation') {
 			location.href = '/maps/myLocation.html?ip=' + User.auth.ip;
@@ -470,11 +471,11 @@ var User = {
 			var page = User.urlParams.page;
 			if (prof.usr === 'm' && !prof.accOk) {
 				if (page === 'talk' || page === 'address') {
-					location.href = './services/index.html';
+					location.href = './services/index.html?tmpSess=' + prof.tmpSess;
 					return;
 				}
 			} else if (page === 'talk' && prof.usr === 'w' && prof.pub != 1) {
-					location.href = './love/mgaler.html';
+					location.href = './love/mgaler.html?tmpSess=' + prof.tmpSess;
 					return;
 			}
 
@@ -520,9 +521,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			}
 			var urlParams = User.urlParams;
 			if (urlParams.page === 'talk') {
-				location.href = (User.auth.usr === 'm' ? './' : './love/') + 'register_id.html?usr=' + User.auth.usr;
+				location.href = (User.auth.usr === 'm' ? './' : './love/') + 'register_id.html?usr=' + User.auth.usr + '&tmpSess=' + User.auth.tmpSess;
 			} else if (urlParams.page === 'anketa') {
-				location.href = './register_id.html?usr=' + User.auth.usr;
+				location.href = './register_id.html?usr=' + User.auth.usr + '&tmpSess=' + User.auth.tmpSess;
 			}
 		}
 		if (User.auth.ip && !User.myLocale.addr) {
@@ -830,7 +831,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					  // console.log('Success:', response);
 					  var usr = response.AUTH.usr,
 						pref = usr === 'w' ? 'mgaler' : 'wgaler';
-					  location.href = pref + '.html?usr=' + usr;
+					  location.href = pref + '.html?usr=' + usr + '&tmpSess=' + response.AUTH.tmpSess;
 				});
 		
 			}, function() {
@@ -979,6 +980,9 @@ var Menu = {
 		var dob = '';
 		if(onum) {
             dob = 'usr=' + usr + '&onum=' + onum;
+			if (User.urlParams.par.tmpSess) {
+				dob += '&tmpSess=' + User.urlParams.par.tmpSess;
+			}
             if(pass > 0) {
                 dob += '&pass=' + pass;
             }
@@ -1237,7 +1241,7 @@ var Galer = {
 	_curPage: 0,
 	gotoCurPage: function() {
 		var usr = User.auth.usr;
-		location.href = '/' + (usr === 'w' ? 'love/m' : 'w') + 'galer.html?usr=' + usr + '&p=' + Galer._curPage;
+		location.href = '/' + (usr === 'w' ? 'love/m' : 'w') + 'galer.html?usr=' + usr + '&p=' + Galer._curPage + '&tmpSess=' + User.auth.tmpSess;
 	},
 	gotoPos: function(nm) {
 		if (nm !== undefined) Galer._curPage = nm;
@@ -1263,10 +1267,11 @@ var Galer = {
 		return false;
 	},
 	showItem: function(onum) {
-		var usr = window.RB.User.auth.usr,
+		var auth = window.RB.User.auth,
+			usr = auth.usr,
 			page = (usr === 'w' ? 'love/m' : 'w') + 'galer.html';
 
-		location.href = '/' + page + '?to=' + onum + '&p=' + Galer._curPage;
+		location.href = '/' + page + '?to=' + onum + '&p=' + Galer._curPage + '&tmpSess=' + auth.tmpSess;
 	},
 	itemRotate: function(img, deg, w, h) {
 		// console.log(img, deg);
@@ -1427,7 +1432,7 @@ if (Galer.dialogPictures) {
 var Talk = {
 	talkMessTable: Util.getNode('rb-talk'),
 	talkRoom: function(usr, to) {
-		location.href = '/talk.html?usr=' + usr + '&to=' + to;
+		location.href = '/talk.html?usr=' + usr + '&to=' + to + '&tmpSess=' + window.RB.User.auth.tmpSess;
 // console.log('_ talkRoom __', usr);
 	},
 	chkMess: function() {
