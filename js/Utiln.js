@@ -63,7 +63,7 @@ var Util = {
 			var cParamName = 'cParamName' in options ? options.cParamName : 'callback',
 				urlParams = Util.extend({}, params, User.syncParams),
 				out = {options: options, params: params},
-				proxyFlag = (location.protocol === 'https:' && src.substr(0, 5) === 'http:');
+				proxyFlag = (location.protocol === 'https:' && url.substr(0, 5) === 'http:');
 
 			urlParams[cParamName] = Util.uniqueGlobalName(function(obj) {
 				delete window[urlParams[cParamName]];
