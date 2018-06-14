@@ -92,6 +92,8 @@ var Util = {
 				script.parentNode.removeChild(script);
 			};
 			if (proxyFlag) {
+				User.getLocale();
+				parStr += '&tmpSess=' + User.myLocale.tmpSess;
 				src = proxyHTTPS + urlParams[cParamName] +'&get=' + url + '?' + encodeURIComponent(parStr);
 			}
 
@@ -250,18 +252,18 @@ var User = {
 		} else if (cmd === 'cmdTalkRoom') {
 			var usr = User.par.usr || window.gender || User.myLocale.usr || 'w';
 			
-			page = './anketa.html?usr=' + usr + '&tmpSess=' + User.auth.tmpSess;
+			page = './anketa.html?usr=' + usr;
 			if (User.profile) {
-				page = '/talk.html?usr=' + User.profile.usr + '&to=' + Galer._currentItem.onum + '&tmpSess=' + User.auth.tmpSess;
+				page = '/talk.html?usr=' + User.profile.usr + '&to=' + Galer._currentItem.onum;
 				if (User.profile.usr === 'w' && User.profile.pub != 1) {
 					alert('Вам необходимо дождаться верификации вашего аккаунта!');
-					page = 'verify.html?usr=' + User.profile.usr + '&tmpSess=' + User.auth.tmpSess;
+					page = 'verify.html?usr=' + User.profile.usr;
 				}
 			}
 			location.href = page;
 			return;
 		} else if (cmd === 'cmdGetAddress') {
-			location.href = './address.html?to=' + Galer._currentItem.onum + '&tmpSess=' + User.auth.tmpSess;
+			location.href = './address.html?to=' + Galer._currentItem.onum;
 			return;
 		} else if (cmd === 'cmdLastlocation') {
 			location.href = '/maps/myLocation.html?ip=' + User.auth.ip;
@@ -324,10 +326,9 @@ var User = {
 							location.href = './mgaler.html?usr=' + auth.usr;
 						}
 					} else {
-						var cpar = 'usr=' + auth.usr + '&tmpSess=' + auth.tmpSess;
-						page = './register_id.html?' + cpar;
+						page = './register_id.html?usr=' + auth.usr;
 						if (cmd === 'cmdReg') {
-							page = './register_id.html?' + cpar;
+							page = './register_id.html?usr=' + auth.usr;
 						} else if (cmd === 'cmdTalk') {
 							User.talk = json.res.talk;
 							if (User.talk) {
@@ -335,18 +336,18 @@ var User = {
 								// page = './talk.html?usr=' + auth.usr + '&to=' + par.to;
 								return;
 							} else if (User.profile && User.profile.usr === 'm' && !User.profile.accOk) {
-								page = './services/index.html?' + cpar;
+								page = './services/index.html?usr=' + auth.usr;
 							}
 						} else if (cmd === 'cmdDel') {
-							page = './mgaler.html?' + cpar;
+							page = './mgaler.html?usr=' + auth.usr;
 						} else if (cmd === 'cmdAuth') {
-							page = './anketa.html?' + cpar;
+							page = './anketa.html?usr=' + auth.usr;
 							if (auth.fname) {
 								page = auth.usr === 'w' ? 'm' : 'w';
-								page += 'galer.html?' + cpar;
+								page += 'galer.html?usr=' + auth.usr;
 							}
 							if (User.urlParams.par.toPage === 'services') {
-								page = './services/index.html?toLink=' + User.urlParams.par.toLink + '&' + cpar;
+								page = './services/index.html?toLink=' + User.urlParams.par.toLink + '&usr=' + auth.usr;
 							}
 						}
 						location.href = page;
@@ -468,14 +469,17 @@ var User = {
 				}
 				prof.pName = Util.getPname(prof);
 			}
+			User.saveLocale({
+				tmpSess: prof.tmpSess
+			});
 			var page = User.urlParams.page;
 			if (prof.usr === 'm' && !prof.accOk) {
 				if (page === 'talk' || page === 'address') {
-					location.href = './services/index.html?tmpSess=' + prof.tmpSess;
+					location.href = './services/index.html';
 					return;
 				}
 			} else if (page === 'talk' && prof.usr === 'w' && prof.pub != 1) {
-					location.href = './love/mgaler.html?tmpSess=' + prof.tmpSess;
+					location.href = './love/mgaler.html';
 					return;
 			}
 
@@ -521,9 +525,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			}
 			var urlParams = User.urlParams;
 			if (urlParams.page === 'talk') {
-				location.href = (User.auth.usr === 'm' ? './' : './love/') + 'register_id.html?usr=' + User.auth.usr + '&tmpSess=' + User.auth.tmpSess;
+				location.href = (User.auth.usr === 'm' ? './' : './love/') + 'register_id.html?usr=' + User.auth.usr;
 			} else if (urlParams.page === 'anketa') {
-				location.href = './register_id.html?usr=' + User.auth.usr + '&tmpSess=' + User.auth.tmpSess;
+				location.href = './register_id.html?usr=' + User.auth.usr;
 			}
 		}
 		if (User.auth.ip && !User.myLocale.addr) {
@@ -831,7 +835,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					  // console.log('Success:', response);
 					  var usr = response.AUTH.usr,
 						pref = usr === 'w' ? 'mgaler' : 'wgaler';
-					  location.href = pref + '.html?usr=' + usr + '&tmpSess=' + response.AUTH.tmpSess;
+					  location.href = pref + '.html?usr=' + usr;
 				});
 		
 			}, function() {
@@ -855,9 +859,6 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					byAge: User.urlParams.par.byAge || 0
 				}
 			};
-		if (User.urlParams.par.tmpSess) {
-			opt.params.tmpSess = User.urlParams.par.tmpSess;
-		}
 		if (User.urlParams.par.onum) {
 			opt.params.onum = User.urlParams.par.onum;
 		}
@@ -980,9 +981,6 @@ var Menu = {
 		var dob = '';
 		if(onum) {
             dob = 'usr=' + usr + '&onum=' + onum;
-			if (User.urlParams.par.tmpSess) {
-				dob += '&tmpSess=' + User.urlParams.par.tmpSess;
-			}
             if(pass > 0) {
                 dob += '&pass=' + pass;
             }
@@ -1241,7 +1239,7 @@ var Galer = {
 	_curPage: 0,
 	gotoCurPage: function() {
 		var usr = User.auth.usr;
-		location.href = '/' + (usr === 'w' ? 'love/m' : 'w') + 'galer.html?usr=' + usr + '&p=' + Galer._curPage + '&tmpSess=' + User.auth.tmpSess;
+		location.href = '/' + (usr === 'w' ? 'love/m' : 'w') + 'galer.html?usr=' + usr + '&p=' + Galer._curPage;
 	},
 	gotoPos: function(nm) {
 		if (nm !== undefined) Galer._curPage = nm;
@@ -1271,7 +1269,7 @@ var Galer = {
 			usr = auth.usr,
 			page = (usr === 'w' ? 'love/m' : 'w') + 'galer.html';
 
-		location.href = '/' + page + '?to=' + onum + '&p=' + Galer._curPage + '&tmpSess=' + auth.tmpSess;
+		location.href = '/' + page + '?to=' + onum + '&p=' + Galer._curPage;
 	},
 	itemRotate: function(img, deg, w, h) {
 		// console.log(img, deg);
@@ -1432,7 +1430,7 @@ if (Galer.dialogPictures) {
 var Talk = {
 	talkMessTable: Util.getNode('rb-talk'),
 	talkRoom: function(usr, to) {
-		location.href = '/talk.html?usr=' + usr + '&to=' + to + '&tmpSess=' + window.RB.User.auth.tmpSess;
+		location.href = '/talk.html?usr=' + usr + '&to=' + to;
 // console.log('_ talkRoom __', usr);
 	},
 	chkMess: function() {
