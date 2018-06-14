@@ -89,6 +89,10 @@ var Util = {
 			script.onload = function() {
 				script.parentNode.removeChild(script);
 			};
+			if (location.protocol === 'https:') {
+				src = proxyHTTPS + src;
+			}
+
 			script.setAttribute('src', src);
 			document.getElementsByTagName('head').item(0).appendChild(script);
 		});
@@ -191,6 +195,7 @@ var Util = {
 
 var host = 'http://russianbrides.com.au', // russianbrides.com.au bridescontacts.net
 	cgiURL = host + '/cgi/authn.pl',
+	proxyHTTPS = 'https://maps.kosmosnimki.ru/ApiSave.ashx?WrapStyle=none&get=',
 	urlParams = Util.getUrlParams(),
 	pref = urlParams.dir === 'love' ? '..' : '.';
 
