@@ -389,13 +389,16 @@ var User = {
 		}
 	},
 	_getLocation: function(ip) {
-		var url = '//ip-api.com/json/' + ip;
-		Util.requestJSONP(url, {}, {callbackParamName: 'callback'}).then(function(json) {
-			User.saveLocale({
-				addr: json.res
+		if (location.protocol === 'http:') {
+			var url = '//ip-api.com/json/' + ip;
+
+			Util.requestJSONP(url, {}, {callbackParamName: 'callback'}).then(function(json) {
+				User.saveLocale({
+					addr: json.res
+				});
+				Util.extend(User.syncParams, json.res);
 			});
-			Util.extend(User.syncParams, json.res);
-		});
+		}
 	},
 	_chkUserOnToggle: function() {
 		var lists = Util.getNodes('userOnToggle'),
