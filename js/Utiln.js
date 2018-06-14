@@ -326,6 +326,11 @@ var User = {
 							location.href = './mgaler.html?usr=' + auth.usr;
 						}
 					} else {
+						if (auth.tmpSess) {
+							User.saveLocale({
+								tmpSess: auth.tmpSess
+							});
+						}
 						page = './register_id.html?usr=' + auth.usr;
 						if (cmd === 'cmdReg') {
 							page = './register_id.html?usr=' + auth.usr;
