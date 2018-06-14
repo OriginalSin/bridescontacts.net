@@ -66,7 +66,7 @@ var Util = {
 
 			urlParams[cParamName] = Util.uniqueGlobalName(function(obj) {
 				delete window[urlParams[cParamName]];
-				out.res = obj;
+				out.res = typeof(obj.Result) === 'string' ? JSON.parse(obj.Result) : obj;
 				resolve(out);
 				if (User.aLoader) { User.aLoader.classList.add('collapse'); }
 			});
