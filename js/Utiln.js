@@ -323,9 +323,10 @@ var User = {
 							location.href = './mgaler.html?usr=' + auth.usr;
 						}
 					} else {
-						page = './register_id.html?usr=' + auth.usr;
+						var cpar = 'usr=' + auth.usr + '&tmpSess=' + auth.tmpSess;
+						page = './register_id.html?' + cpar;
 						if (cmd === 'cmdReg') {
-							page = './register_id.html?usr=' + auth.usr;
+							page = './register_id.html?' + cpar;
 						} else if (cmd === 'cmdTalk') {
 							User.talk = json.res.talk;
 							if (User.talk) {
@@ -333,18 +334,18 @@ var User = {
 								// page = './talk.html?usr=' + auth.usr + '&to=' + par.to;
 								return;
 							} else if (User.profile && User.profile.usr === 'm' && !User.profile.accOk) {
-								page = './services/index.html';
+								page = './services/index.html?' + cpar;
 							}
 						} else if (cmd === 'cmdDel') {
-							page = './mgaler.html?usr=' + auth.usr;
+							page = './mgaler.html?' + cpar;
 						} else if (cmd === 'cmdAuth') {
-							page = './anketa.html?usr=' + auth.usr;
+							page = './anketa.html?' + cpar;
 							if (auth.fname) {
 								page = auth.usr === 'w' ? 'm' : 'w';
-								page += 'galer.html?usr=' + auth.usr;
+								page += 'galer.html?' + cpar;
 							}
 							if (User.urlParams.par.toPage === 'services') {
-								page = './services/index.html?toLink=' + User.urlParams.par.toLink;
+								page = './services/index.html?toLink=' + User.urlParams.par.toLink + '&' + cpar;
 							}
 						}
 						location.href = page;
