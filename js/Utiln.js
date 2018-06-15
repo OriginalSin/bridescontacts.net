@@ -81,7 +81,7 @@ var Util = {
 				parStr = pArr.join('&'),
 				src = url + (url.indexOf('?') === -1 ? '?' : '&') + parStr;
 
- 			script.setAttribute('charset', 'UTF-8');
+			script.setAttribute('charset', 'UTF-8');
 			script.onerror = function(e) {
 				out.err = e;
 				reject(out);
@@ -194,6 +194,8 @@ var Util = {
 				</div>\
 			</div>\
 		'
+	},
+	translates: {
 	}
 };
 
@@ -207,27 +209,22 @@ var User = {
 	pref: pref,
 	urlParams: urlParams,
 	cmdSave: Util.getNode('cmdSave'),
-	aLoader: Util.createNode('img', {insertBefore: true, src: pref + '/css/img/ajax-loader.gif', className: 'aLoader collapse'}, document.body),
+	aLoader: Util.createNode('img', {insertBefore: true, src: '/css/img/ajax-loader.gif', className: 'aLoader collapse'}, document.body),
 	getFormData: function(formNode) {
 		var formData = new FormData();
 		for (var i = 0, len = formNode.length; i < len; i++) {
-			var it = formNode[i],
-				type = it.type;
+			var it = formNode[i];
 			formData.append(it.name, Util.trim(it.value));
 		}
 		for (var key in User.syncParams) {
 			formData.append(key, User.syncParams[key]);
 		}
-		// for(var pair of formData.entries()) {
-		   // console.log(pair[0]+ ', '+ pair[1]); 
-		// }
 		return formData;
 	},
 	getParamsFormNode: function(formNode) {
 		var params = {};
 		for (var i = 0, len = formNode.length; i < len; i++) {
-			var it = formNode[i],
-				type = it.type;
+			var it = formNode[i];
 			params[it.name] = Util.trim(it.value);
 			if (it.name === 'onum') {
 				delete User.syncParams.onum;
@@ -268,7 +265,7 @@ var User = {
 		} else if (cmd === 'cmdLastlocation') {
 			location.href = '/maps/myLocation.html?ip=' + User.auth.ip;
 			return;
-		} else if (cmd === 'cmdCopyLink') {
+		// } else if (cmd === 'cmdCopyLink') {
 		}
 		if (dataForm && cmd) {
 			var frm = document.forms[dataForm],
@@ -413,14 +410,15 @@ var User = {
 	_chkUserOnToggle: function() {
 		var lists = Util.getNodes('userOnToggle'),
 			op = 'add',
-			onum = '';
+			onum = '',
+			i, len;
 		if (User.profile) {
 			op = 'remove';
 			onum = User.profile.onum;
 			User._chkProfileItems(User.profile);
 		}
 
-		for(var i = 0, len = lists.length; i < len; i++) {
+		for(i = 0, len = lists.length; i < len; i++) {
 			var node = lists[i];
 			node.classList[op]('collapse');
 			if (node.tagName.toLowerCase() === 'form') {
@@ -429,7 +427,7 @@ var User = {
 		}
 		lists = Util.getNodes('userOffToggle');
 		op = User.profile ? 'add' : 'remove';
-		for(var i = 0, len = lists.length; i < len; i++) {
+		for(i = 0, len = lists.length; i < len; i++) {
 			lists[i].classList[op]('collapse');
 		}
 	},
@@ -544,16 +542,17 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		var dop = {
 			everBlock: prof.ever == 1 ? 'подтвержден' : 'не подтвержден',
 			profileTitle: 'Анкета - ID=' + prof.onum	// + ' Пароль=' + prof.pass
-		};
-		for (var i = 0, len = nodeForm.length; i < len; i++) {
+		},
+		i, len, zn;
+		for (i = 0, len = nodeForm.length; i < len; i++) {
 			var it = nodeForm[i],
 				type = it.type;
 			if (type === 'submit' || type === 'reset') { continue; }
 
 			var name = it.name,
-				zn = User.auth[name] || User.auth.pdata[name] || '',
 				tagName = it.tagName.toLowerCase();
 
+			zn = User.auth[name] || User.auth.pdata[name] || '';
 			if (name === 'yy' && zn < 1900) {
 				zn = 1980;
 			}
@@ -571,9 +570,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			}
 		}
 		for (var key in dop) {
-			var nodes = Util.getNodes(key, nodeForm),
-				zn = dop[key];
-			for (var i = 0, len = nodes.length; i < len; i++) {
+			var nodes = Util.getNodes(key, nodeForm);
+			zn = dop[key];
+			for (i = 0, len = nodes.length; i < len; i++) {
 				nodes[i].innerHTML = zn;
 			}
 		}
@@ -607,8 +606,8 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 	_addNewImages: function(files) {
 		if (files && files.length) {
 			var nodeForm = User.rbProfileForm,
-				rbImages = Util.getNode('box-pictures', nodeForm),
-				lastNum = rbImages.children.length;
+				rbImages = Util.getNode('box-pictures', nodeForm);
+				// lastNum = rbImages.children.length;
 			User.dopFiles = User.dopFiles || {};
 			for (var i = 0, len = files.length; i < len; i++) {
 				var file = files[i],
@@ -619,9 +618,8 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					};
 					// var node = Util.createNode('span', {className: 'box-picture', innerHTML: User.editIcons}, rbImages),
 					var node = Util.createNode('span', {className: 'box-picture'}, rbImages),
-						img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: key}}, node),
-						span = Util.createNode('span', null, node);
-						
+						img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: key}}, node);
+					Util.createNode('span', null, node);
 					User._fileToImage(file, img);
 				}
 			}
@@ -640,10 +638,10 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		var node = ev.target,
 			dialogPictures = Util.getNode('dialog-pictures'),
 			img = Util.getNode('rb-view-image', dialogPictures),
-
 			dataKey = img.getAttribute('dataKey'),
 			dopFiles = User.dopFiles || {},
-			images = User.profile ? User.profile.pdata.images : [];
+			images = User.profile ? User.profile.pdata.images : [],
+			simg;
 		if (node.classList.contains('cmdClose')) {
 			Util.getNode('dialog-pictures').classList.toggle('collapse');
 		} else if (node.classList.contains('cmdPrev') || node.classList.contains('cmdNext')) {
@@ -669,14 +667,14 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			// } else {
 				// images.splice(Number(dataKey) - 1, 1);
 			// }
-			var simg = User._findImageByKey(dataKey);
+			simg = User._findImageByKey(dataKey);
 			simg.parentNode.remove(simg);
 			Util.getNode('dialog-pictures').classList.toggle('collapse');
 		} else if (node.classList.contains('cmdRotate')) {
 			User._setTransform(img, -90);
 			var imgAttr = dopFiles[dataKey] || images[dataKey - 1];
 			imgAttr.rotate = img._rotate;
-			var simg = User._findImageByKey(dataKey);
+			simg = User._findImageByKey(dataKey);
 			simg.style.transform = 'rotate(' + imgAttr.rotate + 'deg)';
 		}
 	},
@@ -713,7 +711,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		}
 		return null;
 	},
-	_addImages: function(images, active) {
+	_addImages: function() {
 		var images = User.profile.pdata.images,
 			nodeForm = User.rbProfileForm,
 			rbImages = Util.getNode('box-pictures', nodeForm),
@@ -724,10 +722,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			for(var i = 0, len = images.length; i < len; i++) {
 				nm++;
 				var attr = images[i];
-				// var node = Util.createNode('span', {className: 'box-picture', innerHTML: User.editIcons}, rbImages),
 				var node = Util.createNode('span', {className: 'box-picture'}, rbImages),
-					img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: nm}}, node),
-					span = Util.createNode('span', null, node);
+					img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: nm}}, node);
+					// span = Util.createNode('span', null, node);
 				img.src = host + '/'+ attr.src;
 				User._setTransform(img, attr.rotate);
 			}
@@ -752,12 +749,12 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			reader.readAsDataURL(file);
 			img.onload = function () {
 				var canvas = Util.createNode('canvas'),
-					sl = (img.naturalWidth - 632) / 2,
-					st = (img.naturalHeight - 948) / 2,
+					// sl = (img.naturalWidth - 632) / 2,
+					// st = (img.naturalHeight - 948) / 2,
+					// asp = 632 / 948,
 					scw = 632 / img.naturalWidth,
 					sch = 948 / img.naturalHeight,
-					sc = Math.min(scw, sch),
-					asp = 632 / 948;
+					sc = Math.min(scw, sch);
 
 				canvas.width = img.naturalWidth * sc;
 				canvas.height = img.naturalHeight * sc; // / aspectRatio;
@@ -769,7 +766,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		});
 	},
 
-	saveProfile: function(frm, cmd) {
+	saveProfile: function(frm) {
 		var formData = new FormData(),
 			profile = User.profile,
 			images = profile.pdata.images,
@@ -777,15 +774,16 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			nm = User._getMaxNumImages(images),
 			nodeForm = frm || User.rbProfileForm,
 			rbImages = Util.getNode('box-pictures', nodeForm),
-			arr = [];
+			arr = [],
+			i, len, it;
 
 		if (rbImages) {
 			var out = [];
-			for (var i = 0, len = rbImages.children.length; i < len; i++) {
+			for (i = 0, len = rbImages.children.length; i < len; i++) {
 				var node = rbImages.children[i],
 					img = Util.getNode('rb-src-jpg', node),
-					attrkey = img.getAttribute('dataKey'),
-					it = dopFiles[attrkey];
+					attrkey = img.getAttribute('dataKey');
+				it = dopFiles[attrkey];
 				if (it) {
 					nm++;
 					var name = profile.onum + '_'  + nm + 'a.jpg';
@@ -815,14 +813,14 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		formData.append('json', 1);
 		formData.append('profile', 1);
 		// var form = Util.getNode('rb-form-profile', Util.getNode('rb-item-detail'));
-		for (var i = 0, len = nodeForm.length; i < len; i++) {
-			var it = nodeForm[i];
+		for (i = 0, len = nodeForm.length; i < len; i++) {
+			it = nodeForm[i];
 			formData.append(it.name, Util.trim(it.value));
 		}
 
 		Promise.all(arr)
 			.then(function(arr) {
-				console.log('Promise.all', arr)
+				// console.log('Promise.all', arr)
 				for (var i = 0, len = arr.length; i < len; i++) {
 					var it = arr[i];
 					formData.append(it.name, it.blob, it.name);
@@ -833,17 +831,18 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					redirect: 'follow',
 					credentials: 'include',
 					body: formData
-				  })
-				  .then(function(response) {return response.json();})
-				  .catch(console.error)
-				  .then(function(response) {
-					  // console.log('Success:', response);
-					  var usr = response.AUTH.usr,
-						pref = usr === 'w' ? 'mgaler' : 'wgaler';
-					  location.href = pref + '.html?usr=' + usr;
+					})
+					.then(function(response) {return response.json();})
+					// eslint-disable-next-line no-console
+					.catch(console.error)
+					.then(function(response) {
+						var usr = response.AUTH.usr,
+							pref = usr === 'w' ? 'mgaler' : 'wgaler';
+						location.href = pref + '.html?usr=' + usr;
 				});
 		
 			}, function() {
+				// eslint-disable-next-line no-console
 				console.log('err', arguments)
 			});
 	},
@@ -930,7 +929,8 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			if (json.res.meetme) {
 				Galer.meetme(json.res.meetme);
 			}
-		}).catch(console.error);
+		// eslint-disable-next-line no-console
+		}).catch(console.log);
 	},
 	logout: function() {
 		location.href = './register_id.html?logout=1'
@@ -941,14 +941,12 @@ var Menu = {
 	rbMenuButton: Util.getNode('rb-menu-button'),
 	rbMenuContent: Util.getNode('rb-menu-content'),
 	rbMenuManContent: Util.getNode('rb-menu-man-content'),
-	toogle: function(it) {
+	toogle: function() {
 		(Menu.rbMenuContent || Menu.rbMenuManContent).classList.toggle('collapse');
 	},
 	getMainMenu: function () {		// меню мужчин
-		var cgi = '/cgi/';
-		// var pref = host;
-		// var pref = './brides';
-		var pref = User.pref;
+		var pref = User.pref,
+			st, key;
 		if (User.urlParams.dir === 'services' ||
 			User.urlParams.dir === 'scammers' ||
 			User.urlParams.dir === 'flora'
@@ -976,14 +974,12 @@ var Menu = {
 			,'faq': {'url': pref + '/faq.html', 'txt': 'Faq' }
 		};
 
-		var prof = User.profile || {};
-		var page = User.par.page || '';
-
-		var onum = prof.onum || User.par.onum || '';
-		var pass = prof.pass || User.par.pass || '';
-		var usr = prof.usr|| User.par.usr || 'm';
-		var op1 = prof.op1 || '';
-		var dob = '';
+		var prof = User.profile || {},
+			page = User.par.page || '',
+			onum = prof.onum || User.par.onum || '',
+			pass = prof.pass || User.par.pass || '',
+			usr = prof.usr|| User.par.usr || 'm',
+			dob = '';
 		if(onum) {
             dob = 'usr=' + usr + '&onum=' + onum;
             if(pass > 0) {
@@ -992,7 +988,7 @@ var Menu = {
             // if(s) {
                 // dob += '&s=' + s;
             // }
-            for(var key in data) {
+            for(key in data) {
 				if (key !== 'devushkam') data[key]['url'] += '?' + dob;
 			}
             var url = 'anketa.html?act=chid&'+dob;
@@ -1003,7 +999,7 @@ var Menu = {
 		}
 
 		var out = '<table>';
-		for(var key in data) {
+		for(key in data) {
 			out += '<tr>';
 			out += '<td><a href="' + data[key].url + '"';
 			if (key == 'devushkam') out += ' target="_blank"';
@@ -1018,7 +1014,7 @@ var Menu = {
 		out += '</table>';
 
 		if(prof.notAnswer) {
-			var st = '';
+			st = '';
 			for (var i in prof.notAnswer.arr) {
 				var nm = prof.notAnswer.arr[i];
 				st += 'ID: <a href="' +  pref + '/talk.html?to=' + nm + '&' + dob + '" target="_blank">' + nm + '</a><br>';
@@ -1034,7 +1030,7 @@ var Menu = {
 		if(prof.accContain) {
 			out += '<table class="accAttr">';
 			out += '<tr><td>';
-			var st = '<a href="/services/index.html"><b style="white-space: nowrap;">Your account contains:</b></a>';
+			st = '<a href="/services/index.html"><b style="white-space: nowrap;">Your account contains:</b></a>';
 			if(prof.accOk) {
 				prof.accContainTitle = 'Premium Membership to date ' + prof.accContain;
 				st += '<span class="anc"><br><br>Premium Membership to<br>date ' + prof.accContain;
@@ -1114,8 +1110,7 @@ var Galer = {
 
 		if (f > 0) { out = '<a href="javascript:" onclick="window.RB.Galer.gotoPrev();">&lt;...Previous</a>'; }
 		var pn = 1 + Math.floor(f / 8),
-			pall = Math.floor(count / 8),
-			pos = count - 8;
+			pall = Math.floor(count / 8);
 		out += '&nbsp;&nbsp;&nbsp;[&nbsp;page ' + pn + '&nbsp;from <a href="javascript:" title="Go to last page" onclick="window.RB.Galer.gotoPos(0);">1</a>&nbsp; to ';
 		out += ' <a href="javascript:" title="Go to last page" onclick="window.RB.Galer.gotoPos(' + (pall - 1) + ');">' + pall + '</a>&nbsp;]';
 		if (pn < pall) { out += '&nbsp;&nbsp;&nbsp;<a href="javascript:" onclick="window.RB.Galer.gotoNext();">Next...&gt;</a>'; }
@@ -1156,7 +1151,7 @@ var Galer = {
 		it.age = new Date().getFullYear() - new Date(it.pdata.yy, it.pdata.mm - 1).getFullYear();
 		var jpg2 = Galer._putImageSrc(it);
 		if (jpg2) {
-			 jpg2.title = 'View '+ it.pdata.images.length +' photos';
+			jpg2.title = 'View '+ it.pdata.images.length +' photos';
 		}
 		Galer._currentItem = it;
 		Galer._putImageSrc(it, null, 1);
@@ -1166,14 +1161,16 @@ var Galer = {
 		var arr = Object.keys(it.pdata).concat(Object.keys(it));
 		arr.forEach(function(key) {
 			var list = Util.getNodes('rb-item-' + key, node),
-				zn = it[key] || it.pdata[key];
-			for (var i = 0, len = list.length; i < len; i++) {
+				zn = it[key] || it.pdata[key],
+				i, len;
+			for (i = 0, len = list.length; i < len; i++) {
 				list[i].innerHTML = zn;
 			}
 			if(form && form[key]) {
-				var trn = translates[key];
+				var trn = Util.translates[key];
 				var n = form[key],
-					tagName = n.tagName.toLowerCase();
+					tagName = n.tagName.toLowerCase(),
+					opt;
 				if (trn) {
 					if (it.usr === 'w') {
 						if (trn.title) {
@@ -1182,9 +1179,9 @@ var Galer = {
 						if (trn.options) {
 							n.options.length =  trn.options.length;
 		
-							for (var i = 0, len = trn.options.length; i < len; i++) {
-								var pt = trn.options[i],
-									opt = n.options[i];
+							for (i = 0, len = trn.options.length; i < len; i++) {
+								var pt = trn.options[i];
+								opt = n.options[i];
 								if (!opt) {
 									opt = document.createElement("option");
 									n.add(opt);
@@ -1202,8 +1199,8 @@ var Galer = {
 					}
 				}
 				if(tagName === 'select') {
-					for (var i = 0, len = n.options.length; i < len; i++) {
-						var opt = n.options[i];
+					for (i = 0, len = n.options.length; i < len; i++) {
+						opt = n.options[i];
 						if (opt.value === zn) {
 							n.selectedIndex = i;
 							break;
@@ -1212,22 +1209,18 @@ var Galer = {
 				} else if(tagName === 'input') {
 					n.value = zn || '';
 				}
-				if(key === 'country') {
+				// if(key === 'country') {
 					// list[0].parentNode.firstChild.innerHTML = 'Russian level: ';
-				}
+				// }
 			}
 		});
 		if(it.usr === 'm') {
-			// if(key === 'state') {
-				//L.DomUtil.addClass(, 'collapse')
-				// 	list[0].parentNode.firstChild.innerHTML = 'Russian level: ';
-			// }
 			if(form && form.addru) {
-				L.DomUtil.addClass(form.addru.parentNode, 'collapse')
+				form.addru.parentNode.classList.add('collapse');
 			}
 		} else {
 			if(form && form.state) {
-				L.DomUtil.addClass(form.state.parentNode, 'collapse')
+				form.state.parentNode.classList.add('collapse');
 			}
 		}
 		if (form) {
@@ -1237,9 +1230,9 @@ var Galer = {
 			Galer.activeItem = it;
 			Galer.activeImage = 0;
 			var list = Util.getNodes('cmdChangeImage', node),
-				className = it.pdata.images.length > 1 ? 'removeClass' : 'addClass';
+				className = it.pdata.images.length > 1 ? 'remove' : 'add';
 			for (var i = 0, len = list.length; i < len; i++) {
-				L.DomUtil[className](list[i], 'collapse');
+				list[i].classList[className]('collapse');
 			}
 		}
 	},
@@ -1304,7 +1297,7 @@ var Galer = {
 		if (st.match('/0/')) {
 			st = st.replace('/0/', '/1/');
 		} else if (st.match('/1/')) {
-			if (!st.match('/russianbrides\.com\.au/')) {
+			if (!st.match('/russianbrides.com.au/')) {
 				st = host + (new URL(st)).pathname.replace('/1/', '/0/');
 			} else {
 				node.onerror = null;
@@ -1328,7 +1321,7 @@ var Galer = {
 				var images = it.pdata.images || User._prpItemImages(it) || [];
 				imagesCount = images.length;
 				if (images[0]) {
-					var img = images[0],
+					var img = images[0];
 					_jpg1 = img.src;
 					if (img.rotate) {
 						rotate += ' onload="window.RB.Galer.itemRotate(this, ' + img.rotate + ')"';
@@ -1354,7 +1347,7 @@ var Galer = {
 		return res + '</table>\n';
 	},
 	_putImageSrc: function(it, node, nm, name) {
-		it = it || myAttr.profile;
+		it = it || User.profile;
 		if (it && it.pdata) {
 			node = node || Galer.rbItemDetail;
 			nm = nm || 2;
@@ -1454,8 +1447,8 @@ var Talk = {
 
 		pt.pName = Util.getPname(pt);
 
-		var arr = User.talk.arr.map(function(it, i) {
-			var dt = Util.uTimeToDate(it.pTime)
+		var arr = User.talk.arr.map(function(it) {
+			var dt = Util.uTimeToDate(it.pTime),
 				ch = 1,
 				pName = pt.pName;
 			if (it.f === profile.onum && it.usr === profile.usr) {
