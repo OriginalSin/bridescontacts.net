@@ -995,8 +995,10 @@ var Menu = {
             for(var key in data) {
 				if (key !== 'devushkam') data[key]['url'] += '?' + dob;
 			}
-            // var url = cgi+'mserv.pl?cmd=gprf&act=chid&'+dob;
             var url = 'anketa.html?act=chid&'+dob;
+			if (location.protocol === 'https:') {
+				url = host + '/' + url;
+			}
             data.profile.url = url;
 		}
 
