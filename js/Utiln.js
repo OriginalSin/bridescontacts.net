@@ -390,7 +390,7 @@ var User = {
 		} else {
 			User.saveLocale({
 				usr: isRus ? 'w' : 'm',
-				lastPage: location.href,
+				//lastPage: location.href,
 				isRus: isRus
 			});
 		}
@@ -1055,6 +1055,15 @@ if (Menu.rbMenuButton) {
 }
 if (Menu.rbMenuManContent) {
 	Menu.rbMenuManContent.innerHTML = Menu.getMainMenu();
+}
+if (location.protocol === 'https:') {
+	var lists = document.getElementsByTagName('a');
+	for(var i = 0, len = lists.length; i < len; i++) {
+		var node = lists[i];
+		if (node.href.indexOf('anketa.html')) {
+			node.href = node.href.replace('https://www.bridescontacts.net', host};
+		}
+	}
 }
 
 // if (User.cmdSave) {
