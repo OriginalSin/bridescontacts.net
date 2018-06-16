@@ -1060,7 +1060,7 @@ if (location.protocol === 'https:') {
 	var lists = document.getElementsByTagName('a');
 	for(var i = 0, len = lists.length; i < len; i++) {
 		var node = lists[i];
-		if (node.href.indexOf('anketa.html')) {
+		if (node.href.indexOf('anketa.html') > 0) {
 			node.href = node.href.replace('https://www.bridescontacts.net', host);
 		}
 	}
