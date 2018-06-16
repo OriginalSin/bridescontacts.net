@@ -1061,7 +1061,7 @@ if (location.protocol === 'https:') {
 	for(var i = 0, len = lists.length; i < len; i++) {
 		var node = lists[i];
 		if (node.href.indexOf('anketa.html')) {
-			node.href = node.href.replace('https://www.bridescontacts.net', host};
+			node.href = node.href.replace('https://www.bridescontacts.net', host);
 		}
 	}
 }
