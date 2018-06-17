@@ -732,6 +732,7 @@ div#galArr {
 	}
 	#galArr td img {
 		width: 100px;
+		height: 150px;
 	}
 }
 
@@ -759,6 +760,7 @@ div#galArr {
 	}
 	#galArr td img {
 		width: 83px;
+		height: 150px;
 	}
 	.rb-wbody .share, #clock {
 		display: none;

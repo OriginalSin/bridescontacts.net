@@ -619,6 +619,7 @@ div#galArr {
 @media (min-width: 650px) {
 	#galArr td img {
 		width: 100px;
+		height: 150px;
 	}
 	.navbar-toggle {
 		display: none;
@@ -684,6 +685,7 @@ div#galArr {
 	}
 	#galArr td img {
 		width: 90px;
+		height: 150px;
 	}
 	.rb-wbody .share, #clock {
 		display: none;
