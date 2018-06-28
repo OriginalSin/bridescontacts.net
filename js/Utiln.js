@@ -375,7 +375,11 @@ var User = {
 	rbPublishForm: Util.getNode('oprosPublish'),
 	saveLocale: function(it) {
 		if (it) { Util.extend(User.myLocale, it); }
-		localStorage._rbLocale = JSON.stringify(User.myLocale);
+		try {
+			localStorage._rbLocale = JSON.stringify(User.myLocale);
+		} catch(error) {
+			console.error(error);
+		}
 	},
 	getLocale: function() {
 		var arr = navigator.languages || [],
