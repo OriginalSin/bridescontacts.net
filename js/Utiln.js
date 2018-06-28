@@ -1278,6 +1278,7 @@ var Galer = {
 		return false;
 	},
 	resort: function(nm) {
+		if (nm === undefined) { nm = User.urlParams.par.byAge ? 0 : 1; }
 		User.urlParams.par.byAge = nm;
 		User.getData();
 		return false;
