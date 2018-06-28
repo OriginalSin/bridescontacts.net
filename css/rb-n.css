@@ -616,6 +616,10 @@ div#galArr {
     height: 16px;
     display: inline-block;
 }
+.rb-content .rb-inner {
+	margin-bottom: 80px;
+}
+
 @media (min-width: 650px) {
 	#galArr td img {
 		width: 100px;

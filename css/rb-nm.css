@@ -397,6 +397,7 @@ label > .anticon {
     padding-left: 0;
 }
 .box-pictures .box-picture {
+    cursor: pointer;
     float: left;
 	padding: 2px;
 }

@@ -601,6 +601,11 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		reader.onload = function (e) {
 			img.src = e.target.result;
 		};
+		// reader.addEventListener("loadend", function () {
+			// img.title = file.name;
+			// img.src = this.result;
+		// }, false);
+
 		reader.readAsDataURL(file);
 	},
 	_addNewImages: function(files) {
@@ -612,17 +617,37 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			for (var i = 0, len = files.length; i < len; i++) {
 				var file = files[i],
 					key = file.name + '_' + file.size + '_' + file.lastModified;
-				if (file.size) { //  && file.size < 3000000
+				// if (file.size) { //  && file.size < 3000000
 					User.dopFiles[key] = {
 						file: file
 					};
 					// var node = Util.createNode('span', {className: 'box-picture', innerHTML: User.editIcons}, rbImages),
 					var node = Util.createNode('span', {className: 'box-picture'}, rbImages),
-						img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: key}}, node);
+						img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: key, title: 'Edit photo'}}, node);
 					Util.createNode('span', null, node);
 					User._fileToImage(file, img);
-				}
+				// }
 			}
+		}
+	},
+	_addImages: function() {
+		var images = User.profile.pdata.images,
+			nodeForm = User.rbProfileForm,
+			rbImages = Util.getNode('box-pictures', nodeForm),
+			nm = 0;
+	
+		if (rbImages) {
+			rbImages.innerHTML = '';
+			for(var i = 0, len = images.length; i < len; i++) {
+				nm++;
+				var attr = images[i];
+				var node = Util.createNode('span', {className: 'box-picture'}, rbImages),
+					img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: nm, title: 'Edit photo'}}, node);
+					// span = Util.createNode('span', null, node);
+				img.src = host + '/'+ attr.src;
+				User._setTransform(img, attr.rotate);
+			}
+			Util.on(rbImages, 'click', User._imageClick);
 		}
 	},
 	_setTransform: function(node, deg) {
@@ -710,26 +735,6 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			}
 		}
 		return null;
-	},
-	_addImages: function() {
-		var images = User.profile.pdata.images,
-			nodeForm = User.rbProfileForm,
-			rbImages = Util.getNode('box-pictures', nodeForm),
-			nm = 0;
-	
-		if (rbImages) {
-			rbImages.innerHTML = '';
-			for(var i = 0, len = images.length; i < len; i++) {
-				nm++;
-				var attr = images[i];
-				var node = Util.createNode('span', {className: 'box-picture'}, rbImages),
-					img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: nm}}, node);
-					// span = Util.createNode('span', null, node);
-				img.src = host + '/'+ attr.src;
-				User._setTransform(img, attr.rotate);
-			}
-			Util.on(rbImages, 'click', User._imageClick);
-		}
 	},
 	_getMaxNumImages: function(images) {
 		var nm = 0;
@@ -1034,9 +1039,9 @@ var Menu = {
 			if(prof.accOk) {
 				prof.accContainTitle = 'Premium Membership to date ' + prof.accContain;
 				st += '<span class="anc"><br><br>Premium Membership to<br>date ' + prof.accContain;
-				st += '<br>Profile Publish - <b>On</b> (<a href="/love/mgaler.html?v=' + prof.onum + '" target="_blank">LoveAustraliaRU</a>)</span>';
+				st += '<br>Profile Publish - <b>On</b> (<a href="/love/mgaler.html?to=' + prof.onum + '" target="_blank">LoveAustraliaRU</a>)</span>';
 			} else {
-				st += '<span class="anc"><br><br>Your Membership is: <b style="color: red">Off</b>';
+				st += '<span class="anc"><br><br>Your Membership is: <b style="color: red">Off</b></span>';
 				// if(onum) {
 					prof.accContainTitle = 'Your Membership is: <b style="color: red">Off</b>';
 				// }
