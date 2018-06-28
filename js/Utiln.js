@@ -378,7 +378,7 @@ var User = {
 		localStorage._rbLocale = JSON.stringify(User.myLocale);
 	},
 	getLocale: function() {
-		var arr = navigator.languages,
+		var arr = navigator.languages || [],
 			len = arr.length,
 			isRus = false;
 	
