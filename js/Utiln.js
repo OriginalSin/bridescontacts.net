@@ -240,8 +240,8 @@ var User = {
 	},
 	clickEvent: function(ev, skip) {
 		var node = ev.target,
-			cmd = node.getAttribute('dataCmd'),
-			dataForm = node.getAttribute('dataForm'),
+			cmd = ev.dataCmd || node.getAttribute('dataCmd'),
+			dataForm = ev.dataForm || node.getAttribute('dataForm'),
 			page = '';
 		if (cmd === 'openImageDialog') {
 			Galer._viewImagesDialog(ev);
@@ -344,11 +344,16 @@ var User = {
 							page = './mgaler.html?usr=' + auth.usr;
 						} else if (cmd === 'cmdAuth') {
 							page = './anketa.html?usr=' + auth.usr;
+
 							if (auth.fname) {
 								page = auth.usr === 'w' ? 'm' : 'w';
 								page += 'galer.html?usr=' + auth.usr;
 							}
-							if (User.urlParams.par.toPage === 'services') {
+if (User.urlParams.par.debug) {
+	// debugger;
+	console.log('debug3', auth);
+page += '&debug=1';
+}							if (User.urlParams.par.toPage === 'services') {
 								page = './services/index.html?toLink=' + User.urlParams.par.toLink + '&usr=' + auth.usr;
 							}
 						}
@@ -843,7 +848,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					})
 					.then(function(response) {return response.json();})
 					// eslint-disable-next-line no-console
-					.catch(console.error)
+					// .catch(console.error)
 					.then(function(response) {
 						var usr = response.AUTH.usr,
 							pref = usr === 'w' ? 'mgaler' : 'wgaler';
@@ -909,6 +914,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 
 		if (User.urlParams.par.to || User.urlParams.par.ns) opt.params.to = User.urlParams.par.to || User.urlParams.par.ns;
 		if (User.par.to) opt.params.to = User.par.to;
+if (User.urlParams.par.debug) {
+	console.log('debug0', opt.params);
+}
 		return Util.requestJSONP(cgiURL, opt.params, {callbackParamName: 'callback'}).then(function(json) {
 			if (json.res) {
 				if (typeof(json.res) === 'string') {
@@ -919,6 +927,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			if (json.res.AUTH && json.res.AUTH.err) {
 				User.needProfile = 1;
 			}
+if (User.urlParams.par.debug) {
+	console.log('debug1', User.needProfile, json.res.AUTH);
+}
 			if (json.res.AUTH && User.needProfile) {
 				User.auth = json.res.AUTH;
 				if (json.res.notAnswer) {
@@ -939,7 +950,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 				Galer.meetme(json.res.meetme);
 			}
 		// eslint-disable-next-line no-console
-		}).catch(console.log);
+		})['catch'](console.log);
 	},
 	logout: function() {
 		location.href = './register_id.html?logout=1'
