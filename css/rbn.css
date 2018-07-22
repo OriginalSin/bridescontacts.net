@@ -236,7 +236,6 @@ a:hover .joinclub {
 	margin:0 auto;
 	text-align: -moz-center;
 }
-
 .content {
 	margin:0 auto;
 	text-align: center;
@@ -528,4 +527,11 @@ a:hover .joinclub {
     background-color: #FFFFFF;
 	/*padding-left: 15px;*/
 	text-align: left;
+}
+
+_:-ms-lang(x), _:-webkit-full-screen, .content { 
+	max-width: 630px;
+}
+_:-ms-lang(x), _:-webkit-full-screen, .content .rb-main { 
+	width: auto;
 }

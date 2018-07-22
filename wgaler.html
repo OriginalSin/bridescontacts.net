@@ -18,7 +18,11 @@
 	<title>&nbsp;Russian Brides&nbsp;&#153; &nbsp;- Browse through the Russian Bride Photo Catalogue</title>
 	<link href="css/rbn.css" rel="stylesheet">
 	<link href="css/rb-nm.css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" rel="stylesheet">
 
+	<!--[if IE]>
+		<link rel="stylesheet" type="text/css" href="css/rbie.css" />
+	<![endif]-->
 	<script src="js/classList.js" charset="utf-8"></script>
 	<script src="js/es6-promise.auto.js" charset="utf-8"></script>
 	<script src="js/fetch.js" charset="utf-8"></script>
@@ -85,7 +89,10 @@
 			<span onclick="RB.Galer.gotoCurPage();">Back</span>
 		</div>
 	<div class="center">
-		<img id="jpg2a" class="rb-src-jpg2" dataCmd="openImageDialog" />
+		<div class="box-picture">
+			<img id="jpg2a" class="rb-src-jpg2" dataCmd="openImageDialog" />
+			<span></span>
+		</div>
 		<div class="" dataCmd="openImageDialog">Click on image for view all photos</div>
 		<br><br>
 		<table class="rightBorder">
@@ -194,5 +201,16 @@ window.twttr = (function(d, s, id) {
 
 	</script>
 	<script src="js/Utiln.js" charset="utf-8"></script>
+	
+<!-- PushAlert 
+<script type="text/javascript">
+    (function(d, t) {
+        var g = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+        g.src = "https://cdn.pushalert.co/integrate_1013305edee4354bde0772075183acac.js";
+        s.parentNode.insertBefore(g, s);
+    }(document, "script"));
+</script>
+ End PushAlert -->
 </body>
 </html>

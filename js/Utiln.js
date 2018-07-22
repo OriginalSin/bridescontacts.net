@@ -15,8 +15,8 @@ var Util = {
 		return typeof(zn) === 'string' ? zn.trim() : zn;
 	},
 	getPname: function(it) {
-		var fname = it.fname || ' ',
-			sname = it.sname || ' ';
+		var fname = decodeURIComponent(it.fname || ' '),
+			sname = decodeURIComponent(it.sname || ' ');
 		return fname[0].toUpperCase() + fname.substr(1) + ' ' + sname[0].toUpperCase() + '.';
 	},
 	getUrlParams: function() {
@@ -444,7 +444,7 @@ page += '&debug=1';
 		var arr = Object.keys(it.pdata).concat(Object.keys(it));
 		arr.forEach(function(key) {
 			var list = Util.getNodes('rb-item-' + key, node),
-				zn = it[key] || it.pdata[key];
+				zn = decodeURIComponent(it[key] || it.pdata[key]);
 			for (var i = 0, len = list.length; i < len; i++) {
 				list[i].innerHTML = zn;
 			}
@@ -568,7 +568,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			if (type === 'checkbox') {
 				it.checked = Number(zn);
 			} else if (tagName === 'input' || tagName === 'textarea') {
-				it.value = zn;
+				it.value = decodeURIComponent(zn);
 			} else if (tagName === 'select') {
 				for (var j = 0, len1 = it.options.length; j < len1; j++) {
 					if (it.options[j].value === zn) {
@@ -814,12 +814,12 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			formData.append('myLocale', JSON.stringify(User.myLocale));
 		}
 		if (User.oprosInfo) {
-			formData.append('fname', Util.trim(User.oprosInfo.fname.value));
-			formData.append('sname', Util.trim(User.oprosInfo.sname.value));
-			formData.append('mobile', Util.trim(User.oprosInfo.mobile.value));
-			formData.append('icq', Util.trim(User.oprosInfo.icq.value));
-			formData.append('subs', Util.trim(User.oprosInfo.subs.value));
-			formData.append('subfn', Util.trim(User.oprosInfo.subfn.value));
+			formData.append('fname', encodeURIComponent(Util.trim(User.oprosInfo.fname.value)));
+			formData.append('sname', encodeURIComponent(Util.trim(User.oprosInfo.sname.value)));
+			formData.append('mobile', encodeURIComponent(Util.trim(User.oprosInfo.mobile.value)));
+			formData.append('icq', encodeURIComponent(Util.trim(User.oprosInfo.icq.value)));
+			formData.append('subs', encodeURIComponent(Util.trim(User.oprosInfo.subs.value)));
+			formData.append('subfn', encodeURIComponent(Util.trim(User.oprosInfo.subfn.value)));
 		}
 
 		formData.append('onum', profile.onum);
@@ -829,7 +829,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		// var form = Util.getNode('rb-form-profile', Util.getNode('rb-item-detail'));
 		for (i = 0, len = nodeForm.length; i < len; i++) {
 			it = nodeForm[i];
-			formData.append(it.name, Util.trim(it.value));
+			formData.append(it.name, encodeURIComponent(Util.trim(it.value)));
 		}
 
 		Promise.all(arr)
@@ -1193,7 +1193,7 @@ var Galer = {
 				zn = it[key] || it.pdata[key],
 				i, len;
 			for (i = 0, len = list.length; i < len; i++) {
-				list[i].innerHTML = zn;
+				list[i].innerHTML = decodeURIComponent(zn);
 			}
 			if(form && form[key]) {
 				var trn = Util.translates[key];
