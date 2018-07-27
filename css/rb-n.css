@@ -619,7 +619,18 @@ div#galArr {
 .rb-content .rb-inner {
 	margin-bottom: 80px;
 }
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: red;
+    opacity: 1; /* Firefox */
+}
 
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: red;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: red;
+}
 @media (min-width: 650px) {
 	#galArr td img {
 		width: 100px;
@@ -682,7 +693,7 @@ div#galArr {
 	.galerItem .rightside, .rb-wbody .rb-content {
 		float: unset;
 		width: 100%;
-		/*margin-left: 4px;*/
+		margin-left: 4px;
 	}
 	.navbar-collapse .navbar-nav > li {
 		border-bottom: 1px solid rgba(255, 255, 255, 0.1);

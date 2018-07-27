@@ -490,9 +490,15 @@ page += '&debug=1';
 					location.href = './services/index.html';
 					return;
 				}
-			} else if (page === 'talk' && prof.usr === 'w' && prof.pub != 1) {
+			} else if (prof.usr === 'w') {
+				if (page === 'mgaler' && (!prof.pdata || !prof.pdata.images || !prof.pdata.images.length)) {
+					//alert('Необходимо заполнить анкету');
+					location.href = 'anketa.html';
+					return;
+				} else if (page === 'talk' && prof.pub != 1) {
 					location.href = './love/mgaler.html';
 					return;
+				}
 			}
 
 			User._prpItemImages(prof);
@@ -808,7 +814,12 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					out.push({src: images[Number(attrkey) - 1].src, rotate: img._rotate || 0});
 				}
 			}
+			images = out;
 			formData.append('images', JSON.stringify(out));
+		}
+		if (profile.usr === 'w' && !images.length) {
+			alert('Необходимо добавить либо прислать по почте - не менее 3 фото!');
+			return;
 		}
 		if (User.myLocale) {
 			formData.append('myLocale', JSON.stringify(User.myLocale));
@@ -829,7 +840,22 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		// var form = Util.getNode('rb-form-profile', Util.getNode('rb-item-detail'));
 		for (i = 0, len = nodeForm.length; i < len; i++) {
 			it = nodeForm[i];
-			formData.append(it.name, encodeURIComponent(Util.trim(it.value)));
+			var zn = Util.trim(it.value);
+			if (profile.usr === 'w') {
+				if ((zn === '' || /[^\u0000-\u007F]/.test(zn)) &&
+					(
+					it.name === 'addru' ||
+					it.name === 'him' ||
+					it.name === 'you'
+					)) {
+					var st = 'Поле необходимо заполнить латинскими символами';
+					it.placeholder = st;
+					it.focus();
+					if (it.value !== '') alert(st);
+					return;
+				}
+			}
+			formData.append(it.name, encodeURIComponent(zn));
 		}
 
 		Promise.all(arr)
