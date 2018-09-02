@@ -848,7 +848,8 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					it.name === 'him' ||
 					it.name === 'you'
 					)) {
-					var st = 'Поле необходимо заполнить латинскими символами';
+					var st = 'Поле необходимо заполнить латинскими символами! Ошибочные символы были удалены. Проверьте поле еще раз.';
+					it.value = zn.replace(/[^\u0000-\u007F]/g, '`');
 					it.placeholder = st;
 					it.focus();
 					if (it.value !== '') alert(st);
