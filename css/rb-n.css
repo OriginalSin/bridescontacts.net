@@ -575,9 +575,11 @@ div#galArr {
     padding-left: 2px;
 	text-align: center;
 }
+
 .rb-online td img {
-    width: 100px;
+	height: 150px;
 }
+
 .sp_notify_prompt {
     text-align: left;
     padding-bottom: 10px;
@@ -706,7 +708,7 @@ div#galArr {
 		display: none;
 	}
 	.rb-online td img {
-		width: 85px;
+		width: 100px;
 	}
 	.rb-mbody #mainMenu {
 		/* display: none; */
