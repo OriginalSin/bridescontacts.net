@@ -852,7 +852,8 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					it.value = zn.replace(/[^\u0000-\u007F]/g, '`');
 					it.placeholder = st;
 					it.focus();
-					if (it.value !== '') alert(st);
+					//if (it.value !== '') 
+					alert(st);
 					return;
 				}
 			}
