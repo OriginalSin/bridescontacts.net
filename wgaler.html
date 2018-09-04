@@ -28,7 +28,18 @@
 	<script src="js/fetch.js" charset="utf-8"></script>
 
 <link rel="manifest" href="/manifest.json" />
-<script src="//cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script type="text/javascript" data-cfasync="false"> 
+ var _foxpush = _foxpush || []; 
+ _foxpush.push(['_setDomain', 'bridescontactsnet']); 
+ (function(){ 
+ var foxscript = document.createElement('script'); 
+ foxscript.src = '//cdn.foxpush.net/sdk/foxpush_SDK_min.js'; 
+ foxscript.type = 'text/javascript'; 
+ foxscript.async = 'true'; 
+ var fox_s = document.getElementsByTagName('script')[0]; 
+ fox_s.parentNode.insertBefore(foxscript, fox_s);})(); 
+ </script>
+<!-- script src="//cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 <script>
   var OneSignal = window.OneSignal || [];
   OneSignal.push(function() {
@@ -36,7 +47,7 @@
       appId: "55073cfa-302b-4056-b247-98bfb2aaaeff",
     });
   });
-</script>
+</script -->
 </head>
 
 <body class="rb-mbody mbody mbodycss">
