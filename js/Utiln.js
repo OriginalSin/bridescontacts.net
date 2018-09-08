@@ -837,6 +837,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		formData.append('usr', profile.usr);
 		formData.append('json', 1);
 		formData.append('profile', 1);
+		if (User.myLocale.pushcrew) {
+			formData.append('pushcrew', User.myLocale.pushcrew);
+		}
 		// var form = Util.getNode('rb-form-profile', Util.getNode('rb-item-detail'));
 		for (i = 0, len = nodeForm.length; i < len; i++) {
 			it = nodeForm[i];
@@ -917,8 +920,10 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		if (User.needProfile) {
 			opt.params.uAttr = 1;
 		}
-		if (window.pushcrew) {
-			opt.params.pushcrew = window.pushcrew.subscriberId;
+		if (window.pushcrew && !User.myLocale.pushcrew) {
+			User.saveLocale({
+				pushcrew: window.pushcrew.subscriberId
+			});
 		}
 
 		if (User.urlParams.page === 'talk') {
