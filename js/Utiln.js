@@ -917,6 +917,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		if (User.needProfile) {
 			opt.params.uAttr = 1;
 		}
+		if (window.pushcrew) {
+			opt.params.pushcrew = window.pushcrew.subscriberId;
+		}
 
 		if (User.urlParams.page === 'talk') {
 			opt.params.page = 'talkn';
