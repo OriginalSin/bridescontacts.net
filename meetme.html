@@ -3,7 +3,12 @@
 <HEAD>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Russian Brides ™ - Please Enter, Check / Change your details</title>
+	<title>Russian Brides ™ - Please Select Profile and Send invitation</title>
+    <meta name="description" content="RUSSIAN BRIDES - provides a large selection russian women profiles." />
+    <meta name="keywords" content="russian, women, selection, australia, russia, meet, love, marriage, single, dating, site, match, introduction, search, singles, online, australian, personals, perth, mamba, agency, loving, ukraine">
+    <meta name="robots" content="index,follow" />
+    <meta name="revisit-after" content="7 days" />
+
 	<link href="css/rbn.css" rel="stylesheet">
 	<link href="css/rb-nm.css" rel="stylesheet">
 
@@ -90,12 +95,100 @@
 			Address: 608 B, 434 St Kilda Rd, Melbourne <br>
 			Victoria, Australia 3004.  
 			<br>
-			2000<span id="curYear"></span> &copy; Copyright.
+			2000<span class="curYear"></span> &copy; Copyright.
 			</div>
 		</div>
 </div>
 	<script>
 		window.gender = 'm';
+	</script>
+	<script src="./js/Utiln.js" charset="utf-8"></script>
+
+	<script>
+<!--#include virtual="/cgi/mserv.pl?cmd=gal&var=gdata&usr=w" -->
+		var genLdJson = function(json) {
+			var script = document.createElement('script'),
+				jobTitle = decodeURI(gdata.galer.arr[0].pdata.him); //JSON.stringify(json).replace(/[\/,/g, '');
+			script.setAttribute('type', 'application/ld+json');
+			// script.innerHTML = '{\
+		// "@context": "http://schema.org",\
+		// "@type": "person",\
+		// "name": "Valeri Pilez",\
+		// "jobTitle": "' + jobTitle + '",\
+		// "url": "http://russianbrides.com.au/wgaler.html?to=41398"\
+	// }\
+	// ';
+var ld = {
+  "@context": "http://www.schema.org",
+  "@type": "Event",
+  "name": "Сергей",
+  "url": "https://www.russian-face.ru/",
+  "description": "z zx zx x ",
+  "location": {
+    "@type": "Place",
+    "name": "  zzxzxxx",
+    "sameAs": "https://www.russian-face.ru/",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Kall 1, Dalen, 83793 Järpen",
+      "addressLocality": "Melb",
+      "addressRegion": "rrr",
+      "postalCode": "12345",
+      "addressCountry": "rus"
+    }
+  },
+  "offers": {
+    "@type": "Offer",
+    "description": "fffffff",
+    "url": "mmmbb",
+    "price": "free"
+  }
+};
+var ld = {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "headline": "Article headline",
+  "alternativeHeadline": "An alternative headline, if need be",
+  "dateline": "London, UK",
+  "image": [
+    "http://www.example.com/image1.jpg",
+    "http://www.example.com/image2.jpg"
+  ],
+  "datePublished": "2015-09-05",
+  "description": "An article that will hopefully be seen in Google News",
+  "articleBody": "Paste the whole mess of code in here"
+};
+var it = gdata.galer.arr[0],
+	pdata = it.pdata,
+	myLocale = JSON.parse(pdata.myLocale) || {},
+	addr = myLocale.addr || {},
+	pname = pdata.fname.substring(0, 1).toLocaleUpperCase() + pdata.fname.substr(1) +
+		' ' + pdata.sname.substring(0, 1).toLocaleUpperCase() + pdata.sname.substr(1);
+ld.headline = pname + ' search family partner';
+ld.alternativeHeadline = 'Profile for ' + pname;
+ld.image = pdata.images.map(function(it) {
+   return 'http://russianbrides.com.au/' + it.src;
+});
+ld.description = decodeURIComponent(pdata.him);
+ld.articleBody = decodeURIComponent(pdata.you);
+ld.dateCreated = new Date(it.rTime * 1000).toLocaleDateString();
+ld.datePublished = new Date().toLocaleDateString();
+ld.dateModified = new Date(it.pTime * 1000).toLocaleDateString();
+ld.dateline = (addr.city || 'Perth') + ', ' + (addr.countryCode || 'AU');
+ld.author = pname;
+ld.publisher = {
+  "@type" : "Organization",
+  "url" : "http://russianbrides.com.au/",
+	"logo" : "http://russianbrides.com.au/img/logo_n.jpg",
+  "name" : 'Russian Brides'
+};
+
+ld.mainEntityOfPage = 'http://russianbrides.com.au/wgaler.html?to=' + it.onum;
+
+script.text = JSON.stringify(ld);
+			document.getElementsByTagName('head').item(0).appendChild(script);
+		};
+		genLdJson(window.RB.User.urlParams);
 
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -104,7 +197,7 @@
 
       ga('create', 'UA-66972511-1', 'auto');
       ga('send', 'pageview');
+	  
 	</script>
 </BODY>
-	<script src="./js/Utiln.js" charset="utf-8"></script>
 </HTML>

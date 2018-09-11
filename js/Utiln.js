@@ -11,6 +11,18 @@ var Util = {
 		zn = d.getMinutes();    pTime += ':' + (zn < 10 ? '0':'') + zn;
 		return pTime;
 	},
+	genLdJson: function(json) {
+		var script = document.createElement('script');
+		script.setAttribute('type', 'application/ld+json');
+		script.innerHTML = '{\
+	"@context": "http://schema.org",\
+	"@type": "person",\
+	"name": "Valeri Pilez",\
+	"url": "http://russianbrides.com.au/wgaler.html?to=41398"\
+}\
+';
+		document.getElementsByTagName('head').item(0).appendChild(script);
+	},
 	trim: function(zn) {
 		return typeof(zn) === 'string' ? zn.trim() : zn;
 	},
@@ -1573,5 +1585,4 @@ if (User.clockNode) {
 		}
 	}, 1000);
 }
-
 })();
