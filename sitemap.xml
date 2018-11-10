@@ -8,12 +8,17 @@
 
 
 <url>
-  <loc>http://russianbrides.com.au/</loc>
+  <loc>http://russianbrides.com.au/index.html</loc>
   <lastmod>2018-06-15T15:13:07+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>http://russianbrides.com.au/registration.html</loc>
+  <loc>http://russianbrides.com.au/wgaler.html</loc>
+  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://russianbrides.com.au/meetme.html</loc>
   <lastmod>2018-06-15T15:13:07+00:00</lastmod>
   <priority>0.80</priority>
 </url>
@@ -23,17 +28,27 @@
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://russianbrides.com.au/wgaler.html</loc>
-  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
   <loc>http://russianbrides.com.au/services/testimonies.html</loc>
   <lastmod>2018-06-15T15:13:07+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://russianbrides.com.au/services/index.html</loc>
+  <loc>http://russianbrides.com.au/about_us.html</loc>
+  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>http://russianbrides.com.au/scammers.html</loc>
+  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
+  <priority>0.33</priority>
+</url>
+<url>
+  <loc>http://russianbrides.com.au/faq.html</loc>
+  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
+  <priority>0.26</priority>
+</url>
+<url>
+  <loc>http://russianbrides.com.au/registration.html</loc>
   <lastmod>2018-06-15T15:13:07+00:00</lastmod>
   <priority>0.80</priority>
 </url>
@@ -43,14 +58,19 @@
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>http://russianbrides.com.au/love/mgaler.html</loc>
-  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
   <loc>http://russianbrides.com.au/forgot.html</loc>
   <lastmod>2018-06-15T15:13:07+00:00</lastmod>
   <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://russianbrides.com.au/services/index.html</loc>
+  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://russianbrides.com.au/services/nodotcom.html</loc>
+  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
+  <priority>0.33</priority>
 </url>
 <url>
   <loc>http://russianbrides.com.au/love/index.html</loc>
@@ -58,14 +78,14 @@
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>http://russianbrides.com.au/love/mgaler.html?t=1</loc>
+  <loc>http://russianbrides.com.au/love/wmeetme.html</loc>
   <lastmod>2018-06-15T15:13:07+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>http://russianbrides.com.au/love/wmeetme.html</loc>
+  <loc>http://russianbrides.com.au/love/mgaler.html</loc>
   <lastmod>2018-06-15T15:13:07+00:00</lastmod>
-  <priority>0.51</priority>
+  <priority>0.64</priority>
 </url>
 <url>
   <loc>http://russianbrides.com.au/love/registration.html</loc>
@@ -133,17 +153,7 @@
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>http://russianbrides.com.au/index.html</loc>
-  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
   <loc>http://russianbrides.com.au/love/join_free.html</loc>
-  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>http://russianbrides.com.au/about_us.html</loc>
   <lastmod>2018-06-15T15:13:07+00:00</lastmod>
   <priority>0.41</priority>
 </url>
@@ -151,21 +161,6 @@
   <loc>http://russianbrides.com.au/love/australia/100facts.html</loc>
   <lastmod>2018-06-15T15:13:07+00:00</lastmod>
   <priority>0.41</priority>
-</url>
-<url>
-  <loc>http://russianbrides.com.au/services/nodotcom.html</loc>
-  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>http://russianbrides.com.au/scammers.html</loc>
-  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>http://russianbrides.com.au/faq.html</loc>
-  <lastmod>2018-06-15T15:13:07+00:00</lastmod>
-  <priority>0.26</priority>
 </url>
 
 
