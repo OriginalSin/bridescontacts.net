@@ -608,9 +608,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		User._addNewImages(ev.target.files);
 	},
 	_prpItemImages: function(profile) {
+		var arr = profile.pdata.images || [];
 		if (!profile.pdata.images) {
-			var arr = [],
-			name = '_jpg2',
+			var name = '_jpg2',
 			it = profile[name] || profile.pdata[name];
 			if(it) {arr.push({src: it});}
 			name = '_jpg1';
@@ -621,7 +621,14 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			if(it) {arr.push({src: it});}
 			profile.pdata.images = arr;
 		}
-		return profile.pdata.images;
+		var imagesHash = {};
+		arr.map(function(it) {
+			var t = /_(\d+)a\.jpg/.exec(it.src);
+			var nm = t ? Number(t[1]) : 1;
+			imagesHash[nm] = it;
+		});
+		profile.imagesHash = imagesHash;
+		return arr;
 	},
 	_fileToImage: function(file, img) {
 		var reader = new FileReader();
@@ -638,21 +645,28 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 	_addNewImages: function(files) {
 		if (files && files.length) {
 			var nodeForm = User.rbProfileForm,
-				rbImages = Util.getNode('box-pictures', nodeForm);
-				// lastNum = rbImages.children.length;
+				// imagesHash = User.profile ? User.profile.imagesHash : {},
+				rbImages = Util.getNode('box-pictures', nodeForm),
+				lastNum = rbImages.children.length;
 			User.dopFiles = User.dopFiles || {};
 			for (var i = 0, len = files.length; i < len; i++) {
 				var file = files[i],
-					key = file.name + '_' + file.size + '_' + file.lastModified;
+					nm = lastNum + i;
+					// key = file.name + '_' + file.size + '_' + file.lastModified;
+				if (nm > 10) {
+					rbImages.removeChild(rbImages.children[i]);
+					nm = i + 1;
+				}
+
 				// if (file.size) { //  && file.size < 3000000
-					User.dopFiles[key] = {
-						file: file
-					};
-					// var node = Util.createNode('span', {className: 'box-picture', innerHTML: User.editIcons}, rbImages),
-					var node = Util.createNode('span', {className: 'box-picture'}, rbImages),
-						img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: key, title: 'Edit photo'}}, node);
-					Util.createNode('span', null, node);
-					User._fileToImage(file, img);
+				User.dopFiles[nm] = {
+					file: file
+				};
+				// var node = Util.createNode('span', {className: 'box-picture', innerHTML: User.editIcons}, rbImages),
+				var node = Util.createNode('span', {className: 'box-picture'}, rbImages),
+					img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: nm, title: 'Edit photo'}}, node);
+				Util.createNode('span', null, node);
+				User._fileToImage(file, img);
 				// }
 			}
 		}
@@ -667,9 +681,10 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			rbImages.innerHTML = '';
 			for(var i = 0, len = images.length; i < len; i++) {
 				nm++;
-				var attr = images[i];
+				var attr = images[i],
+					arr = /_(\d+)a\.jpg/.exec(attr.src);
 				var node = Util.createNode('span', {className: 'box-picture'}, rbImages),
-					img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: nm, title: 'Edit photo'}}, node);
+					img = Util.createNode('img', {className: 'rb-src-jpg', attr:{dataKey: arr ? arr[1] : nm, title: 'Edit photo'}}, node);
 					// span = Util.createNode('span', null, node);
 				img.src = host + '/'+ attr.src;
 				User._setTransform(img, attr.rotate);
@@ -693,6 +708,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			dataKey = img.getAttribute('dataKey'),
 			dopFiles = User.dopFiles || {},
 			images = User.profile ? User.profile.pdata.images : [],
+			imagesHash = User.profile ? User.profile.imagesHash : {},
 			simg;
 		if (node.classList.contains('cmdClose')) {
 			Util.getNode('dialog-pictures').classList.toggle('collapse');
@@ -714,11 +730,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			if (pt.rotate) { img.style.transform = 'rotate(' + pt.rotate + 'deg)'; }
 			if (footer) { footer.innerHTML = '<span class="round rb-absolute">' + (nm + 1) + '</span'; }
 		} else if (node.classList.contains('cmdDelete')) {
-			// if (dopFiles.dataKey) {
-				// delete dopFiles.dataKey;
-			// } else {
-				// images.splice(Number(dataKey) - 1, 1);
-			// }
+			if (imagesHash[dataKey]) {
+				imagesHash[dataKey].del = true;
+			}
 			simg = User._findImageByKey(dataKey);
 			simg.parentNode.remove(simg);
 			Util.getNode('dialog-pictures').classList.toggle('collapse');
@@ -728,6 +742,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			imgAttr.rotate = img._rotate;
 			simg = User._findImageByKey(dataKey);
 			simg.style.transform = 'rotate(' + imgAttr.rotate + 'deg)';
+			if (imagesHash[dataKey]) {
+				imagesHash[dataKey].rotate = imgAttr.rotate;
+			}
 		}
 	},
 	_imageClick: function(ev) {
@@ -735,15 +752,17 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			tagName = img.tagName.toLowerCase();
 		if (tagName === 'img') {
 			var dialogNode = Util.getNode('dialog-pictures'),
-				tmp = Util.templates.viewImage;
+				tmp = Util.templates.viewImage,
+				dataKey = img.getAttribute('dataKey');
 			tmp = tmp.replace('{h_buttons}', '').replace('{buttons}', '\
+				<button type="button" class="ant-btn ant-btn-primary photo-info"><span>photo-'+ dataKey +'</span></button>\
 				<button type="button" class="ant-btn ant-btn-primary ant-btn-lg cmdDelete"><span>Delete</span></button>\
 				<button type="button" class="ant-btn ant-btn-primary ant-btn-lg cmdRotate"><span>Rotate</span></button>\
-				<button type="button" class="ant-btn ant-btn-primary ant-btn-lg cmdClose"><span>Done</span></button>');
+				<button type="button" class="ant-btn ant-btn-primary ant-btn-lg cmdClose"><span>Done</span></button>\
+				');
 
 			dialogNode.innerHTML = tmp;
-			var body = Util.getNode('ant-modal-body'),
-				dataKey = img.getAttribute('dataKey');
+			var body = Util.getNode('ant-modal-body');
 
 			body.innerHTML = '<img class="rb-view-image" src="'+ img.src +'" dataKey="'+ dataKey +'" />';
 			dialogNode.classList.toggle('collapse');
@@ -771,7 +790,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		});
 		return nm;
 	},
-	_resizeImage: function(file, name) {
+	_resizeImage: function(file, name, nm) {
 		return new Promise(function(resolve) {
 			var img = new Image();
 			var reader = new FileReader();
@@ -792,7 +811,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 				canvas.height = img.naturalHeight * sc; // / aspectRatio;
 				canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, canvas.width, canvas.height);
 				canvas.toBlob(function (blob) {
-					resolve({file: file, blob: blob, name: name});
+					resolve({file: file, blob: blob, name: name, nm: nm});
 				}, 'image/jpeg');
 			};
 		});
@@ -802,8 +821,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 		var formData = new FormData(),
 			profile = User.profile,
 			images = profile.pdata.images,
+			imagesHash = User.profile ? User.profile.imagesHash : {},
 			dopFiles = User.dopFiles || {},
-			nm = User._getMaxNumImages(images),
+			// nm = User._getMaxNumImages(images),
 			nodeForm = frm || User.rbProfileForm,
 			rbImages = Util.getNode('box-pictures', nodeForm),
 			arr = [],
@@ -814,20 +834,26 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			for (i = 0, len = rbImages.children.length; i < len; i++) {
 				var node = rbImages.children[i],
 					img = Util.getNode('rb-src-jpg', node),
-					attrkey = img.getAttribute('dataKey');
-				it = dopFiles[attrkey];
+					nm = Number(img.getAttribute('dataKey')),
+					pt = imagesHash[nm];
+				it = dopFiles[nm];
 				if (it) {
-					nm++;
 					var name = profile.onum + '_'  + nm + 'a.jpg';
-					//formData.append(name, it.file);
-					arr.push(User._resizeImage(it.file, name));
+					arr.push(User._resizeImage(it.file, name, nm));
 					out.push({src: 'jpeg/' + profile.usr + '/0/' + name, rotate: img._rotate || 0});
 				} else {
-					out.push({src: images[Number(attrkey) - 1].src, rotate: img._rotate || 0});
+					out.push({src: images[nm - 1].src, rotate: img._rotate || 0});
 				}
 			}
 			images = out;
 			formData.append('images', JSON.stringify(out));
+			out = [];
+			for (var key in imagesHash) {
+				if (imagesHash[key].del) {
+					out.push(key);
+				}
+			}
+			formData.append('imagesDelete', out.join(','));
 		}
 		if (profile.usr === 'w' && !images.length) {
 			alert('Необходимо добавить либо прислать по почте - не менее 3 фото!');
@@ -915,7 +941,7 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 				params: {
 					cmd: 'gal',
 					usr: User.urlParams.par.usr || User.par.usr || profile.usr || window.gender || User.myLocale.usr || 'w',
-					page: User.par.page || '',
+					page: User.par.page || User.urlParams.page || '',
 					f: nm * 8,
 					byAge: User.urlParams.par.byAge || 0
 				}

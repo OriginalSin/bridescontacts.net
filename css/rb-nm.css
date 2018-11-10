@@ -269,6 +269,11 @@ button, html [type="button"], [type="reset"], [type="submit"] {
     margin-left: 8px;
     margin-bottom: 0;
 }
+.ant-btn.photo-info {
+    background-color: darkred;
+	border-color: darkred;
+    cursor: help;
+}
 
 button, html [type="button"], [type="reset"], [type="submit"] {
     -webkit-appearance: button;
