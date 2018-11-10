@@ -647,9 +647,11 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 			var nodeForm = User.rbProfileForm,
 				// imagesHash = User.profile ? User.profile.imagesHash : {},
 				rbImages = Util.getNode('box-pictures', nodeForm),
+				len = files.length,
 				lastNum = rbImages.children.length;
 			User.dopFiles = User.dopFiles || {};
-			for (var i = 0, len = files.length; i < len; i++) {
+			if (len > 10) { len = 10; }
+			for (var i = 0; i < len; i++) {
 				var file = files[i],
 					nm = lastNum + i;
 					// key = file.name + '_' + file.size + '_' + file.lastModified;
@@ -835,15 +837,13 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 				var node = rbImages.children[i],
 					img = Util.getNode('rb-src-jpg', node),
 					nm = Number(img.getAttribute('dataKey')),
-					pt = imagesHash[nm];
+					name = profile.onum + '_'  + nm + 'a.jpg',
+					src = 'jpeg/' + profile.usr + '/0/' + name;
 				it = dopFiles[nm];
 				if (it) {
-					var name = profile.onum + '_'  + nm + 'a.jpg';
 					arr.push(User._resizeImage(it.file, name, nm));
-					out.push({src: 'jpeg/' + profile.usr + '/0/' + name, rotate: img._rotate || 0});
-				} else {
-					out.push({src: images[nm - 1].src, rotate: img._rotate || 0});
 				}
+				out.push({src: src, rotate: img._rotate || 0});
 			}
 			images = out;
 			formData.append('images', JSON.stringify(out));
