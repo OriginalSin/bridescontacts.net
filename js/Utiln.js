@@ -842,6 +842,8 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 				it = dopFiles[nm];
 				if (it) {
 					arr.push(User._resizeImage(it.file, name, nm));
+				} else if (imagesHash[nm]) {
+					src = imagesHash[nm].src;
 				}
 				out.push({src: src, rotate: img._rotate || 0});
 			}
@@ -1460,8 +1462,8 @@ var Galer = {
 				zn = it[jpg] || it.pdata[jpg] || it.pdata._jpg1,
 				node1 = Util.getNode(name, node);
 
-			if (it.pdata.images) {
-				var pt = it.pdata.images[nm - 1];
+			if (it.pdata.images && it.pdata.images.length) {
+				var pt = it.pdata.images[nm - 1] || it.pdata.images[0];
 				if (pt) {
 					zn = pt.src;
 					// if (node1) {node1.style.transform = 'rotate(' + pt.rotate + 'deg)';}
