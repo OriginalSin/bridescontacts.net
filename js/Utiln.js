@@ -657,8 +657,9 @@ if (!User._menuReady && Menu.rbMenuManContent) {
 					// key = file.name + '_' + file.size + '_' + file.lastModified;
 				if (nm > 10) {
 					rbImages.removeChild(rbImages.children[i]);
-					nm = i + 1;
+					// nm = i + 1;
 				}
+				nm++;
 
 				// if (file.size) { //  && file.size < 3000000
 				User.dopFiles[nm] = {
